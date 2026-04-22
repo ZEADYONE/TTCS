@@ -64,16 +64,17 @@
                         </div>
                         <nav class="side-nav">
                             <a href="/client/community" class="nav-item">
-                                <i class="fas fa-users"></i>
-                                <span>Community<small>Chia sẻ bộ flashcard</small></span>
+                                <i class="fas fa-users"></i><span>Community<small>Chia sẻ flashcard</small></span>
                             </a>
                             <a href="/client/library" class="nav-item">
-                                <i class="fas fa-book-open"></i>
-                                <span>My Library<small>FlashCard của bạn</small></span>
+                                <i class="fas fa-book-open"></i><span>My Library<small>FlashCard của bạn</small></span>
                             </a>
                             <a href="/client/course" class="nav-item">
-                                <i class="fas fa-graduation-cap"></i>
-                                <span>Course <small>FlashCard từ Admin</small></span>
+                                <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
+                            </a>
+                            <a href="/groups" class="nav-item active"
+                                style="background: rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color);">
+                                <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
                             </a>
                         </nav>
                     </aside>

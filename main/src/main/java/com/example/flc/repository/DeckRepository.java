@@ -101,4 +101,5 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
 
         @Query("SELECT COUNT(d) FROM Deck d WHERE d.isFeatured = true")
         long countFeatured();
+
 }
