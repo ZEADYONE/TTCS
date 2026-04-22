@@ -12,4 +12,6 @@ public interface GroupDeckRepository extends JpaRepository<GroupDeck, Long> {
 
     // Lấy deck chờ duyệt để show cho Lead
     List<GroupDeck> findByGroupIdAndIsApprovedFalse(Long groupId);
+
+    void deleteByGroupId(Integer groupId);
 }

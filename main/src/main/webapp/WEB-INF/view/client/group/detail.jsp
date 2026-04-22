@@ -14,6 +14,7 @@
             <div class="app-container">
                 <main class="main-content">
                     <section class="library-section">
+
                         <div class="library-header"
                             style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
                             <div class="title-area">
@@ -36,6 +37,16 @@
                                         onclick="document.getElementById('add-member-popup').style.display='flex'">
                                         <span><i class="fas fa-user-plus"></i> Thêm thành viên</span>
                                     </div>
+
+                                    <form action="/groups/${group.id}/disband" method="post" style="margin: 0;"
+                                        onsubmit="return confirm('CẢNH BÁO: Bạn có chắc chắn muốn giải tán nhóm này? Toàn bộ dữ liệu thành viên và bài chia sẻ sẽ bị xóa VĨNH VIỄN!');">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <button type="submit" class="btn-create"
+                                            style="background: #dc3545; border: none; cursor: pointer; padding: 10px 15px;">
+                                            <span style="color: white;"><i class="fas fa-trash"></i> Giải tán
+                                                nhóm</span>
+                                        </button>
+                                    </form>
                                 </c:if>
                             </div>
                         </div>
@@ -102,8 +113,8 @@
                                             </div>
 
                                             <c:if test="${isLeader && member.groupRole != 'LEADER'}">
-                                                <form action="/groups/${group.id}/kick" method="post"
-                                                    style="margin: 0;">
+                                                <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
+                                                    onsubmit="return confirm('Mời thành viên này ra khỏi nhóm?');">
                                                     <input type="hidden" name="${_csrf.parameterName}"
                                                         value="${_csrf.token}" />
                                                     <input type="hidden" name="targetUserId" value="${member.user.id}">
@@ -111,6 +122,20 @@
                                                         style="background: none; border: none; color: red; cursor: pointer;"
                                                         title="Kick khỏi nhóm">
                                                         <i class="fas fa-user-minus"></i>
+                                                    </button>
+                                                </form>
+                                            </c:if>
+
+                                            <c:if test="${!isLeader && member.user.id == currentUserId}">
+                                                <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
+                                                    onsubmit="return confirm('Bạn có chắc chắn muốn rời khỏi nhóm này?');">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <input type="hidden" name="targetUserId" value="${member.user.id}">
+                                                    <button type="submit"
+                                                        style="background: none; border: none; color: orange; cursor: pointer;"
+                                                        title="Tự rời nhóm">
+                                                        <i class="fas fa-sign-out-alt"></i> Rời nhóm
                                                     </button>
                                                 </form>
                                             </c:if>
@@ -153,7 +178,6 @@
                     </div>
                 </form>
             </div>
-
         </body>
 
         </html>

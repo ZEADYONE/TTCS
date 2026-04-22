@@ -21,10 +21,6 @@ public class StudyGroup {
     @Column(name = "group_name", length = 100, nullable = false)
     private String groupName;
 
-    // Người tạo tự động là Lead
-    @ManyToOne
-    @JoinColumn(name = "lead_id", nullable = false)
-    private User lead;
 
     @Column(name = "created_at")
     private Date createdAt = new Date();
@@ -45,13 +41,6 @@ public class StudyGroup {
         this.groupName = groupName;
     }
 
-    public User getLead() {
-        return lead;
-    }
-
-    public void setLead(User lead) {
-        this.lead = lead;
-    }
 
     public Date getCreatedAt() {
         return createdAt;

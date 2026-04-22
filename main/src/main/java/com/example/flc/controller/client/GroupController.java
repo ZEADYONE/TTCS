@@ -1,21 +1,15 @@
 package com.example.flc.controller.client;
 
 import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.flc.domain.StudyGroup;
 import com.example.flc.domain.User;
 import com.example.flc.repository.UserRepository;
 import com.example.flc.service.GroupService;
-import com.example.flc.service.UserService;
 
 @Controller
 @RequestMapping("/groups")
@@ -25,9 +19,6 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private UserRepository userRepository;
-
-    // Hàm giả định lấy User đang đăng nhập
-    // private User getCurrentUser() { ... }
 
     @GetMapping
     public String listGroups(Model model, Principal principal) {
@@ -46,12 +37,16 @@ public class GroupController {
         User currentUser = userRepository.findByEmail(principal.getName());
         StudyGroup group = groupService.getGroupById(groupId);
 
-        boolean isLead = group.getLead().getId() == currentUser.getId();
+        boolean isLead = groupService.checkIsLeader(groupId, currentUser);
 
         model.addAttribute("group", group);
         model.addAttribute("members", groupService.getMembers(groupId));
         model.addAttribute("approvedDecks", groupService.getApprovedDecks(groupId));
-        model.addAttribute("isLead", isLead);
+
+        // SỬA DÒNG NÀY: Đổi "isLead" thành "isLeader"
+        model.addAttribute("isLeader", isLead);
+
+        model.addAttribute("currentUserId", currentUser.getId());
 
         if (isLead) {
             model.addAttribute("pendingDecks", groupService.getPendingDecks(groupId));
@@ -72,9 +67,27 @@ public class GroupController {
     }
 
     @PostMapping("/{groupId}/kick")
-    public String kickOrLeave(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal) {
-        groupService.removeMember(groupId, targetUserId, userRepository.findByEmail(principal.getName()));
-        return "redirect:/groups/" + groupId;
+    public String kickOrLeave(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal,
+            Model model) {
+        try {
+            groupService.removeMember(groupId, targetUserId, userRepository.findByEmail(principal.getName()));
+            return "redirect:/groups/" + groupId;
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return viewGroup(groupId, model, principal);
+        }
+    }
+
+    // --- API GIẢI TÁN NHÓM ---
+    @PostMapping("/{groupId}/disband")
+    public String disbandGroup(@PathVariable Long groupId, Principal principal, Model model) {
+        try {
+            groupService.disbandGroup(groupId, userRepository.findByEmail(principal.getName()));
+            return "redirect:/groups"; // Xóa xong thì chuyển về danh sách nhóm
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return viewGroup(groupId, model, principal);
+        }
     }
 
     @PostMapping("/{groupId}/submit-deck")
