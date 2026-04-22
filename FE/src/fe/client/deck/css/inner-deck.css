@@ -1,0 +1,317 @@
+:root {
+    --primary-bg: #0a0a2e;
+    --accent-purple: #7c4dff;
+    --light-blue: #e3f2fd;
+    --text-dark: #333;
+    --header-bg: #0a0e27;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f5f7fb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.top-nav {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand h1 {
+    font-size: 1.4rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #d1d5db;
+    border-radius: 50%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Main Content */
+main {
+    padding: 2rem 5%;
+    background-color: #1D3DA1;
+}
+
+.title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.title-section p {
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.title-section button {
+    padding: 12px 60px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: rgb(207, 244, 249);
+    width: 200px;
+    height: 44.8px;
+}
+
+.exit {
+    position: relative;
+    cursor: pointer;
+    font-size: 50px;
+    color: #2a81eb;
+}
+
+/* Buttons */
+.action-buttons {
+    display: flex;
+    margin-bottom: 2rem;
+    justify-content: center;
+    gap: 20%;
+}
+
+.btn {
+    padding: 12px 60px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: rgb(60, 115, 243);
+    width: 300px;
+}
+
+.btn:hover {
+    filter: brightness(1.1);
+}
+
+/* Flashcards Container */
+.flashcards-container {
+    background-color: var(--light-blue);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid #b3e5fc;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 2rem;
+}
+
+/* Single Card */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 60%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.card-action {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    bottom: 10px;
+    right: 10px;
+    gap: 10px;
+}
+
+.card-action .trash {
+    color: red;
+}
+
+.card-content {
+    position: absolute;
+    z-index: 2;
+    bottom: 10px;
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.card-content p {
+    margin: 5px 0;
+    font-weight: 500;
+    color: red;
+}
+
+.audio-icon {
+    position: absolute;
+    bottom: 50px;
+    cursor: pointer;
+    z-index: 2;
+    right: 10px;
+}
+
+/* Pagination */
+.pagination {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.pagination span {
+    margin: 0 5px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+}
+
+.pagination .active {
+    color: var(--accent-purple);
+    text-decoration: underline;
+}
+
+/* Dropdown Menu */
+
+/* Quan trọng nhất: Cần có position: relative để dropdown bám vào đây */
+.container-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng hover cho đẹp */
+.container-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mini-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.info-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Hiển thị phía dưới container */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+
+    /* Trạng thái ẩn mặc định */
+    display: none;
+    flex-direction: column;
+}
+
+/* Class này sẽ được JS thêm vào khi click */
+.info-dropdown.show {
+    display: flex;
+}
+
+/* Các mục bên trong menu */
+.dropdown-item {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0088cc;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}
+
+.search-box {
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    width: 500px;
+}
+
+.search-box input {
+    border: none;
+    padding: 15px;
+    width: 100%;
+    outline: none;
+    font-size: 1rem;
+
+}

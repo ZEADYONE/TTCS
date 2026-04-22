@@ -1,0 +1,198 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Layout chung */
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #05062d;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f7ff;
+}
+
+/* Vùng nội dung bảng */
+.content-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.table-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #cbd5e1;
+    min-height: 85vh;
+}
+
+/* Thanh công cụ */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-filter-group {
+    display: flex;
+    gap: 10px;
+}
+
+.search-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    width: 350px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.filter-btn {
+    border: 1px solid #cbd5e1;
+    background: white;
+    padding: 0 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: #3b1fb1;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Bảng dữ liệu */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table thead tr {
+    background-color: #a5b4fc;
+    color: #1e293b;
+}
+
+.data-table th,
+.data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: left;
+}
+
+.data-table th {
+    font-weight: 600;
+}
+
+/* Icon hành động */
+.actions i {
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-view {
+    color: #475569;
+}
+
+.btn-edit {
+    color: #475569;
+}
+
+.btn-lock {
+    color: #ef4444;
+}
+
+/* Khóa màu đỏ */
+.btn-unlock {
+    color: #22c55e;
+}
+
+.container-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.popup {
+    background: #E9F4FA;
+    border-radius: 10px;
+    width: 400px;
+    color: #48798A;
+
+    font-weight: bold;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.popup-title {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+#save {
+    background: linear-gradient(to right, #008DBC, #0851E2);
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    font-weight: bold;
+}
+
+#cancel {
+    background: #ffffff;
+    color: #0090BA;
+    border: 2px solid #a7f6ff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 50%;
+    font-weight: bold;
+}
+
+.pagination {
+    position: relative;
+    left: 41%;
+    top: 200px;
+    display: inline;
+}

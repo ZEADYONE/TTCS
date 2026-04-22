@@ -1,0 +1,343 @@
+:root {
+    --dark-blue: #0a0a3c;
+    --light-blue: #0088cc;
+    --bg-gray: #f4f7f6;
+    --logout-red: #b30000;
+    --text-gray: #666;
+    --header-bg: #0a0e27;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    background-color: white;
+}
+
+
+/* Header */
+.top-nav {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand h1 {
+    font-size: 1.4rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #d1d5db;
+    border-radius: 50%;
+}
+
+/* Main Container */
+.container {
+    width: 100%;
+    margin: 30px 0px;
+    padding: 0 20px;
+
+}
+
+/* Banner Section */
+.profile-banner {
+    background-color: var(--light-blue);
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    margin-bottom: 25px;
+    gap: 450px;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.avatar-large {
+    width: 120px;
+    height: 120px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid white;
+}
+
+.avatar-large i {
+    font-size: 3rem;
+    color: #555;
+}
+
+.user-intro h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.email-text {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+}
+
+.location-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 4px;
+    display: inline-block;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.mini-bio {
+    font-size: 0.85rem;
+    max-width: 350px;
+    line-height: 1.4;
+}
+
+.btn-edit {
+    background: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    height: 70px;
+}
+
+.btn-edit:hover {
+    background: #eee;
+}
+
+/* Info Card */
+.info-card {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.info-card h3 {
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 12px;
+    color: #888;
+}
+
+.input-wrapper span {
+    position: absolute;
+    left: 12px;
+    color: #888;
+}
+
+.input-wrapper input,
+.bio-group textarea {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.input-wrapper span,
+.bio-group span {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.bio-group {
+    margin-top: 20px;
+}
+
+.bio-group textarea {
+    padding-left: 15px;
+    height: 80px;
+    resize: none;
+}
+
+.bio-group span {
+    padding-left: 15px;
+    height: 80px;
+    resize: none;
+}
+
+/* .form-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+} */
+
+.btn-save {
+    background-color: #0088cc;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: rgb(73, 71, 71);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background-color: #041c98;
+}
+
+.btn-cancel:hover {
+    background-color: #7b7676;
+}
+
+.group-btn {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    right: 20px;
+    justify-content: flex-end;
+}
+
+/* Dropdown Menu */
+/* Quan trọng nhất: Cần có position: relative để dropdown bám vào đây */
+.container-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng hover cho đẹp */
+.container-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mini-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.info-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Hiển thị phía dưới container */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+
+    /* Trạng thái ẩn mặc định */
+    display: none;
+    flex-direction: column;
+}
+
+/* Class này sẽ được JS thêm vào khi click */
+.info-dropdown.show {
+    display: flex;
+}
+
+/* Các mục bên trong menu */
+.dropdown-item {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0088cc;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}

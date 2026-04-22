@@ -1,0 +1,197 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* SLIDEBAR */
+.sidebar {
+    width: 260px;
+    background-color: #1a3a8a;
+    /* Xanh đậm */
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    font-size: 40px;
+}
+
+.menu {
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+.menu-item {
+    display: block;
+    padding: 15px 20px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+}
+
+.menu-item i {
+    margin-right: 15px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.menu-item.active {
+    background-color: #2563eb;
+    /* Màu xanh sáng của Dashboard active */
+    color: white;
+}
+
+/* Header */
+.top-nav {
+    background-color: #0a0e27;
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand h1 {
+    font-size: 1.4rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #d1d5db;
+    border-radius: 50%;
+}
+
+
+/* FILTER */
+.filter-dropdown-container {
+    position: relative;
+}
+
+.filter-dropdown {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    width: 150px;
+    z-index: 10;
+}
+
+.filter-dropdown label {
+    font-size: 13px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.filter-btn {
+    background: none;
+    border: 1px solid #ccc;
+    height: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Dropdown Menu */
+/* Quan trọng nhất: Cần có position: relative để dropdown bám vào đây */
+.container-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng hover cho đẹp */
+.container-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mini-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.info-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Hiển thị phía dưới container */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+
+    /* Trạng thái ẩn mặc định */
+    display: none;
+    flex-direction: column;
+}
+
+/* Class này sẽ được JS thêm vào khi click */
+.info-dropdown.show {
+    display: flex;
+}
+
+/* Các mục bên trong menu */
+.dropdown-item {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0088cc;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}

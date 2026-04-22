@@ -1,0 +1,164 @@
+/* Tận dụng lại các biến màu và reset từ phần Dashboard */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #03042c;
+}
+
+/* Nền tối bao quanh */
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.main-content {
+    flex: 1;
+    background-color: #eef2ff;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Table Wrapper */
+.content-body {
+    padding: 20px;
+    flex: 1;
+}
+
+.table-wrapper {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #cbd5e1;
+    min-height: 85vh;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-filter-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-box {
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    width: 300px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+}
+
+/* .filter-btn {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+} */
+
+.btn-create {
+    background-color: #3b1fb1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Dropdown Filter
+.filter-dropdown-container {
+    position: relative;
+}
+
+.filter-dropdown {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    width: 150px;
+    z-index: 10;
+}
+
+.filter-dropdown label {
+    font-size: 13px;
+    margin: 5px 0;
+    cursor: pointer;
+} */
+
+/* Table Style */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table thead tr {
+    background-color: #a5b4fc;
+}
+
+/* Màu xanh nhạt tiêu đề */
+.user-table th,
+.user-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    text-align: left;
+}
+
+/* Action Icons */
+.actions i {
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-view {
+    color: #475569;
+}
+
+.btn-edit {
+    color: #475569;
+}
+
+.btn-lock {
+    color: #ef4444;
+}
+
+/* Khóa màu đỏ */
+.btn-unlock {
+    color: #22c55e;
+}
+
+/* Mở khóa màu xanh lá */
+.pagination {
+    position: relative;
+    left: 41%;
+    top: 300px;
+    display: inline;
+}

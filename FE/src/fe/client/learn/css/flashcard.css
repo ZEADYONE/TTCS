@@ -1,0 +1,400 @@
+:root {
+    --primary-bg: #0d0d3a;
+    --app-bg: #eef2ff;
+    --card-border: #3b82f6;
+    --btn-wrong: #ff4d4d;
+    --btn-correct: #4ade80;
+    --btn-flip: #d1d5db;
+    --header-bg: #0a0e27;
+}
+
+body {
+    margin: 0;
+    background-color: var(--app-bg);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.top-nav {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand h1 {
+    font-size: 1.4rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.profile-circle {
+    width: 45px;
+    height: 45px;
+    background-color: #d1d5db;
+    border-radius: 50%;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.back-nav {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.back-nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.topic-info h2 {
+    color: #2c2c54;
+    margin-bottom: 5px;
+}
+
+.progress {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Flashcard Flip Effect */
+.flashcard-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 700px;
+    height: 400px;
+    margin: 20px auto;
+}
+
+.flashcard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: #dbeafe;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-front img {
+    width: 60%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background: #FCF4FB;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.card-back h3 {
+    color: #AB52E7;
+}
+
+.card-back h3,
+.card-back p {
+    text-align: left;
+}
+
+.back-infor {
+    gap: 20px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.audio-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    color: #333;
+}
+
+/* Buttons */
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-wrong {
+    background-color: var(--btn-wrong);
+    color: white;
+}
+
+.btn-correct {
+    background-color: var(--btn-correct);
+    color: white;
+}
+
+.btn-flip {
+    background-color: var(--btn-flip);
+    color: #333;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+
+/* HIDDEN */
+/* Trạng thái ẩn/hiện */
+.hidden {
+    display: none !important;
+}
+
+/* Sửa lại phần hiển thị của màn hình kết quả */
+#result-screen {
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    /* Xếp Header trên, Main dưới */
+    background-color: #eef2ff;
+}
+
+/* Căn giữa phần nội dung kết quả trong khoảng trống còn lại */
+.result-main {
+    flex: 1;
+    /* Chiếm toàn bộ không gian còn lại */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    /* Gỡ bỏ margin cũ để căn giữa chuẩn hơn */
+}
+
+/* Giữ nguyên các style cũ cho result-container, score-box... */
+.result-container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    padding-bottom: 50px;
+    /* Tạo khoảng trống dưới cùng */
+}
+
+.result-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Màu sắc cho Icon Award cho "sang" hơn */
+.fa-award {
+    color: #f59e0b;
+    /* Màu vàng đồng */
+}
+
+.result-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.result-card h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.score-board {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.score-box {
+    width: 120px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.score-box p {
+    font-size: 12px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.score-box span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.score-box.correct {
+    background-color: #ecfdf5;
+    border-color: #10b981;
+}
+
+.score-box.incorrect {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+}
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.btn-res {
+    padding: 15px 50px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-back {
+    background: white;
+    border: 1px solid #ddd;
+    color: black;
+}
+
+.btn-replay {
+    background: #0093ca;
+    color: white;
+}
+
+.btn-res:hover {
+    opacity: 0.8;
+}
+
+/* Dropdown Menu */
+/* Quan trọng nhất: Cần có position: relative để dropdown bám vào đây */
+.container-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng hover cho đẹp */
+.container-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mini-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.info-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Hiển thị phía dưới container */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+
+    /* Trạng thái ẩn mặc định */
+    display: none;
+    flex-direction: column;
+}
+
+/* Class này sẽ được JS thêm vào khi click */
+.info-dropdown.show {
+    display: flex;
+}
+
+/* Các mục bên trong menu */
+.dropdown-item {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0088cc;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Platform - Profile</title>
+    <link rel="stylesheet" href="css/view.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- <header class="navbar">
+        <div class="logo-section">
+            <h1>English Learning Platform</h1>
+            <p>Master English with Interactive Exercises</p>
+        </div>
+        <nav class="nav-links">
+            <a href="/src/fe/client/homepage.html">HOME</a>
+            <a href="/src/fe/client/community.html">FLASHCARD</a>
+        </nav>
+        <div class="profile-circle-mini"></div>
+    </header> -->
+
+    <header class="top-nav">
+        <div class="brand">
+            <h1>English Learning Platform</h1>
+            <p>Master English with Interactive Exercises</p>
+        </div>
+        <div class="nav-links">
+            <a href="/src/fe/client/homepage.html">HOME</a>
+            <a href="/src/fe/client/community.html">FLASHCARD</a>
+
+        </div>
+        <div class="container-info" id="userDropdownTrigger">
+            <i class="fa-regular fa-user"></i>
+            <span class="user-name">Nguyễn Văn A</span>
+            <i class="fa-solid fa-chevron-down mini-arrow"></i>
+            <div class="info-dropdown" id="infoDropdown">
+                <a href="/src/fe/info/view-info.html">
+                    <div class="dropdown-item"><i class="fa-solid fa-circle-info"></i> Information</div>
+                </a>
+                <a href="/src/fe/admin/dashbroad.html">
+                    <div class="dropdown-item"><i class="fa-regular fa-user"></i> Admin</div>
+                </a>
+                <a href="/src/fe/client/homepage.html">
+                    <div class="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i> Logout</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="profile-banner">
+            <div class="banner-content">
+                <div class="avatar-large">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="user-intro">
+                    <h2>Nguyễn Văn A</h2>
+                    <p class="email-text">nguyenvanA@gmail.com</p>
+                    <div class="location-badge">
+                        <i class="fa-solid fa-location-dot"></i> Ho Chi Minh City, Viet Nam
+                    </div>
+                    <p class="mini-bio">Passionate about learning and technology. Currently studying Web Development and
+                        Data Science.</p>
+                </div>
+            </div>
+            <a href="update-info.html"><button class="btn-edit"><i class="fa-solid fa-pen"></i> Edit
+                    Profile</button></a>
+        </section>
+
+        <section class="info-card">
+            <h3><i class="fa-solid fa-user"></i> Personal Information</h3>
+            <form id="profile-form">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>UserName</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" value="Nguyen Van A" disabled>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>FullName</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" value="Nguyễn Văn A" disabled>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" value="nguyenvanA@gmail.com" disabled>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="text" value="09213411213" disabled>
+                        </div>
+                    </div>
+                    <!-- <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" value="123456" disabled>
+                        </div>
+                    </div> -->
+                    <div class="input-group">
+                        <label>DateOfBirth</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            <input type="date" value="2005-11-11" disabled>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Location</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <input type="text" value="Ho Chi Minh" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group bio-group">
+                    <label>Bio</label>
+                    <textarea
+                        disabled>Passionate about learning and technology. Currently studying Web Development and Data Science.</textarea>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="js/view.js"></script>
+</body>
+
+</html>

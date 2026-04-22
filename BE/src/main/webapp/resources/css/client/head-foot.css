@@ -1,0 +1,368 @@
+:root {
+    --dark-navy: #0a0a32;
+    --bright-blue: #4a6cf7;
+    --text-light: #ffffff;
+    --bg-light: #f4f7ff;
+    --header-bg: #0a0e27;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+body {
+    background-color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.login a {
+    color: aliceblue;
+    font-size: 20px;
+}
+
+.login a:hover {
+    color: aquamarine;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* Header */
+.top-nav {
+    background-color: var(--header-bg);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand h1 {
+    font-size: 1.4rem;
+}
+
+.brand p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.container-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* Hiệu ứng hover cho đẹp */
+.container-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mini-arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+.info-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Hiển thị phía dưới container */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+
+    /* Trạng thái ẩn mặc định */
+    display: none;
+    flex-direction: column;
+}
+
+/* Class này sẽ được JS thêm vào khi click */
+.info-dropdown.show {
+    display: flex;
+}
+
+/* Các mục bên trong menu */
+.dropdown-item {
+    padding: 12px 15px;
+    color: #333;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0088cc;
+}
+
+.dropdown-item i {
+    width: 16px;
+    font-size: 14px;
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--dark-navy);
+    color: white;
+    text-align: center;
+    padding: 60px 0 0 0;
+}
+
+.hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.hero-image img {
+    position: relative;
+    top: 100px;
+    width: 450px;
+    border-radius: 20px;
+    border: 1px solid black;
+    display: block;
+    margin: 0 auto 0px;
+}
+
+/* Stats Section */
+.stats {
+    background-color: var(--bg-light);
+    padding: 100px 0 40px;
+    text-align: center;
+}
+
+.stat-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.stat-item h3 {
+    font-size: 1.8rem;
+    color: var(--bright-blue);
+}
+
+.stat-item p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Steps Section */
+.steps {
+    background-color: var(--dark-navy);
+    color: white;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.section-title h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.section-title p {
+    opacity: 0.7;
+    margin-bottom: 50px;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.step-card {
+    background: white;
+    color: #333;
+    padding: 40px 30px;
+    border-radius: 10px;
+    text-align: left;
+    position: relative;
+}
+
+.step-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #eee;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.step-icon {
+    background: #eef2ff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--bright-blue);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.step-card h4 {
+    margin-bottom: 10px;
+}
+
+.step-card p {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* CTA Section */
+.cta {
+    background-color: var(--bright-blue);
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+}
+
+.cta h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-start {
+    background: white;
+    color: var(--bright-blue);
+    border: none;
+    padding: 15px 35px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.btn-start:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-navy);
+    color: white;
+    padding: 60px 0;
+}
+
+.footer-logo {
+    margin-bottom: 40px;
+    font-size: 1.5rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+
+.footer-col h5 {
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.footer-col p {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    line-height: 1.6;
+}
+
+/* PHAN TRANG */
+
+/* Container của pagination */
+.custom-pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.375rem;
+    justify-content: center;
+}
+
+.custom-pagination .page-link {
+    position: relative;
+    display: block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: #0d6efd;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.custom-pagination .page-item:first-child .page-link {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+.custom-pagination .page-item:last-child .page-link {
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+/* Hiệu ứng hover */
+.custom-pagination .page-link:hover {
+    z-index: 2;
+    color: #0a58ca;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* Trạng thái Active (trang hiện tại) */
+.custom-pagination .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Trạng thái Disabled */
+.custom-pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
