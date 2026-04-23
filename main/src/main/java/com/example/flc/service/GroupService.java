@@ -3,8 +3,12 @@ package com.example.flc.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+
+import com.example.flc.domain.DTO.AdminGroupDTO;
 
 import com.example.flc.domain.Deck;
 import com.example.flc.domain.GroupDeck;
@@ -32,11 +36,13 @@ public class GroupService {
     private DeckRepository deckRepo;
 
     // --- HÀM KIỂM TRA QUYỀN LEADER ---
-    // --- HÀM KIỂM TRA QUYỀN LEADER ---
     public boolean checkIsLeader(Long groupId, User user) {
+        if (user.getRole() != null && "ADMIN".equals(user.getRole().getName())) {
+            return true;
+        }
+        
         List<GroupMember> members = memberRepo.findByGroupId(groupId);
         for (GroupMember m : members) {
-            // Vì id là kiểu nguyên thủy (long), dùng toán tử == là chuẩn nhất!
             if (m.getUser().getId() == user.getId() && "LEADER".equals(m.getGroupRole())) {
                 return true;
             }
@@ -46,9 +52,15 @@ public class GroupService {
 
     @Transactional
     public StudyGroup createGroup(String name, User creator) {
+        return createGroup(name, null, creator);
+    }
+
+    @Transactional
+    public StudyGroup createGroup(String name, String description, User creator) {
         StudyGroup group = new StudyGroup();
         group.setGroupName(name);
-        group = groupRepo.save(group); // Đã bỏ group.setLead()
+        group.setDescription(description);
+        group = groupRepo.save(group); 
 
         // Người tạo tự động là LEADER
         GroupMember member = new GroupMember();
@@ -58,6 +70,14 @@ public class GroupService {
         memberRepo.save(member);
 
         return group;
+    }
+
+    @Transactional
+    public void updateGroup(Long groupId, String name, String description) {
+        StudyGroup group = groupRepo.findById(groupId).orElseThrow();
+        group.setGroupName(name);
+        group.setDescription(description);
+        groupRepo.save(group);
     }
 
     @Transactional
@@ -181,5 +201,36 @@ public class GroupService {
 
     public List<GroupDeck> getPendingDecks(Long groupId) {
         return groupDeckRepo.findByGroupIdAndIsApprovedFalse(groupId);
+    }
+
+    public Page<AdminGroupDTO> getAdminGroups(String keyword, Pageable pageable) {
+        Page<StudyGroup> groupsPage;
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            groupsPage = groupRepo.findByGroupNameContainingIgnoreCase(keyword.trim(), pageable);
+        } else {
+            groupsPage = groupRepo.findAll(pageable);
+        }
+
+        return groupsPage.map(group -> {
+            AdminGroupDTO dto = new AdminGroupDTO();
+            dto.setId(group.getId().longValue());
+            dto.setGroupName(group.getGroupName());
+            dto.setDescription(group.getDescription());
+            dto.setCreatedAt(group.getCreatedAt());
+            
+            List<GroupMember> members = memberRepo.findByGroupId(group.getId().longValue());
+            dto.setMemberCount(members.size());
+            
+            String leaderName = "Unknown";
+            for (GroupMember m : members) {
+                if ("LEADER".equals(m.getGroupRole())) {
+                    leaderName = m.getUser().getUserName();
+                    break;
+                }
+            }
+            dto.setLeaderName(leaderName);
+            
+            return dto;
+        });
     }
 }

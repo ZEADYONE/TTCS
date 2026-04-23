@@ -21,6 +21,8 @@ public class StudyGroup {
     @Column(name = "group_name", length = 100, nullable = false)
     private String groupName;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     @Column(name = "created_at")
     private Date createdAt = new Date();
@@ -39,6 +41,14 @@ public class StudyGroup {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 
