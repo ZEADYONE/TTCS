@@ -211,8 +211,10 @@
                                             <c:if test="${currentUser == deck.userId}">
                                                 <div class="card-actions"
                                                     style="display: flex; align-items: center; gap: 15px;">
-                                                    <i class="fas fa-share-alt share-deck-btn" style="cursor: pointer; color: var(--primary-color);"
-                                                        data-deck-id="${deck.id}" title="Share to Group" onclick="openShareModal(${deck.id})"></i>
+                                                    <i class="fas fa-share-alt share-deck-btn"
+                                                        style="cursor: pointer; color: var(--primary-color);"
+                                                        data-deck-id="${deck.id}" title="Share to Group"
+                                                        onclick="openShareModal(${deck.id})"></i>
 
                                                     <i class="fas fa-wrench fix_deck" style="cursor: pointer;"
                                                         data-id="${deck.id}" data-title="${deck.title}"
@@ -317,23 +319,27 @@
                     <form class="popup" action="/groups/share-from-library" method="post">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <input type="hidden" name="deckId" id="share-deck-id">
-                        
+
                         <h3>Share Deck to Group</h3>
-                        
+
                         <label>Select Group</label>
-                        <select name="groupId" required style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
+                        <select name="groupId" required
+                            style="width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc;">
                             <option value="" disabled selected>-- Chọn nhóm học tập --</option>
                             <c:forEach var="group" items="${myGroups}">
                                 <option value="${group.id}">${group.groupName}</option>
                             </c:forEach>
                         </select>
                         <c:if test="${empty myGroups}">
-                            <p style="color: #dc3545; font-size: 0.9em; margin-bottom: 10px;">Bạn chưa tham gia nhóm học tập nào.</p>
+                            <p style="color: #dc3545; font-size: 0.9em; margin-bottom: 10px;">Bạn chưa tham gia nhóm học
+                                tập nào.</p>
                         </c:if>
-                        
+
                         <div class="popup-buttons">
-                            <button type="submit" style="background-color: #28a745; color: white;" ${empty myGroups ? 'disabled' : ''}>Share</button>
-                            <button type="button" onclick="closeShareModal()" style="background-color: #dc3545; color: white;">Cancel</button>
+                            <button type="submit" style="background-color: #28a745; color: white;" ${empty myGroups
+                                ? 'disabled' : '' }>Share</button>
+                            <button type="button" onclick="closeShareModal()"
+                                style="background-color: #dc3545; color: white;">Cancel</button>
                         </div>
                     </form>
                 </div>

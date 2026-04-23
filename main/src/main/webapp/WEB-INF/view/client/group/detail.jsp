@@ -464,10 +464,14 @@
                                 <div class="deck-grid">
                                     <c:forEach var="pending" items="${pendingDecks}">
                                         <div class="deck-item pending">
-                                            <div class="deck-content">
-                                                <h4>${pending.deck.title}</h4>
-                                                <p>Đang chờ Admin nhóm xác nhận.</p>
-                                            </div>
+                                            <a href="/client/deck/${pending.deck.id}"
+                                                style="color: inherit; text-decoration: none;">
+                                                <div class="deck-content">
+                                                    <h4>${pending.deck.title}</h4>
+                                                    <p>Đang chờ Admin nhóm xác nhận.</p>
+                                                </div>
+                                            </a>
+
                                             <c:if test="${isLeader}">
                                                 <div class="deck-footer">
                                                     <form action="/groups/${group.id}/approve-deck" method="post"
