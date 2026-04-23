@@ -5,122 +5,511 @@
 
         <head>
             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${group.groupName} - English Learning Platform</title>
-            <link rel="stylesheet" href="/css/client/style.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+            <style>
+                /* CSS Reset & Variables */
+                :root {
+                    --primary: #4361ee;
+                    --success: #28a745;
+                    --danger: #dc3545;
+                    --warning: #ffc107;
+                    --warning-dark: #f39c12;
+                    --bg-color: #f4f7f6;
+                    --card-bg: #ffffff;
+                    --text-main: #333333;
+                    --text-muted: #6c757d;
+                    --border-color: #e0e0e0;
+                }
+
+                * {
+                    box-sizing: border-box;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background-color: var(--bg-color);
+                    color: var(--text-main);
+                    line-height: 1.6;
+                }
+
+                /* Container & Layout */
+                .app-container {
+                    max-width: 1200px;
+                    margin: 30px auto;
+                    padding: 0 20px;
+                }
+
+                .dashboard-header {
+                    background: var(--card-bg);
+                    padding: 20px 25px;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 25px;
+                }
+
+                .title-area h2 {
+                    font-size: 1.8rem;
+                    color: var(--primary);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .error-msg {
+                    color: var(--danger);
+                    font-weight: 600;
+                    margin-top: 5px;
+                    font-size: 0.9rem;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    gap: 12px;
+                }
+
+                /* Buttons */
+                .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 18px;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    border: none;
+                    color: white;
+                    transition: all 0.2s ease;
+                    text-decoration: none;
+                    font-size: 0.95rem;
+                }
+
+                .btn-success {
+                    background: var(--success);
+                }
+
+                .btn-success:hover {
+                    background: #218838;
+                }
+
+                .btn-primary {
+                    background: var(--primary);
+                }
+
+                .btn-primary:hover {
+                    background: #3a53d0;
+                }
+
+                .btn-danger {
+                    background: var(--danger);
+                }
+
+                .btn-danger:hover {
+                    background: #c82333;
+                }
+
+                /* Main Content Grid */
+                .main-grid {
+                    display: grid;
+                    grid-template-columns: 2fr 1fr;
+                    gap: 25px;
+                }
+
+                /* Section Styling */
+                .section-card {
+                    background: var(--card-bg);
+                    border-radius: 12px;
+                    padding: 25px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                    margin-bottom: 25px;
+                }
+
+                .section-title {
+                    font-size: 1.3rem;
+                    margin-bottom: 20px;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid var(--border-color);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .section-title.approved i {
+                    color: var(--success);
+                }
+
+                .section-title.pending {
+                    color: var(--warning-dark);
+                    border-bottom-color: #ffe8b3;
+                }
+
+                .section-title.pending i {
+                    color: var(--warning-dark);
+                }
+
+                /* Deck Grid & Cards */
+                .deck-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 20px;
+                }
+
+                .deck-item {
+                    background: #fff;
+                    border: 1px solid var(--border-color);
+                    border-radius: 10px;
+                    overflow: hidden;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .deck-item:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .deck-item.approved {
+                    border-top: 4px solid var(--success);
+                }
+
+                .deck-item.pending {
+                    border: 2px dashed var(--warning-dark);
+                    background: #fffcf5;
+                }
+
+                .deck-content {
+                    padding: 20px;
+                    flex-grow: 1;
+                    text-decoration: none;
+                    color: inherit;
+                }
+
+                .deck-content h4 {
+                    font-size: 1.1rem;
+                    margin-bottom: 8px;
+                    color: var(--text-main);
+                }
+
+                .deck-content p {
+                    color: var(--text-muted);
+                    font-size: 0.9rem;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                .deck-footer {
+                    background: #f8f9fa;
+                    padding: 12px 20px;
+                    border-top: 1px solid var(--border-color);
+                    text-align: right;
+                }
+
+                .deck-item.pending .deck-footer {
+                    background: #fff3cd;
+                    border-top: 1px solid #ffeeba;
+                }
+
+                .btn-approve {
+                    background: none;
+                    border: none;
+                    color: var(--success);
+                    font-weight: 700;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    margin-left: auto;
+                }
+
+                .btn-approve:hover {
+                    color: #218838;
+                    text-decoration: underline;
+                }
+
+                /* Members List */
+                .member-list {
+                    list-style: none;
+                }
+
+                .member-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 15px;
+                    border-bottom: 1px solid var(--border-color);
+                    transition: background 0.2s;
+                }
+
+                .member-item:hover {
+                    background: #f8f9fa;
+                }
+
+                .member-item:last-child {
+                    border-bottom: none;
+                }
+
+                .member-info {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .member-name {
+                    font-weight: 600;
+                    color: var(--text-main);
+                }
+
+                .badge-leader {
+                    background: var(--warning);
+                    color: #000;
+                    font-size: 0.75rem;
+                    padding: 3px 8px;
+                    border-radius: 12px;
+                    font-weight: bold;
+                }
+
+                .btn-icon {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 1.1rem;
+                    padding: 5px;
+                    transition: transform 0.2s;
+                }
+
+                .btn-icon.kick {
+                    color: var(--danger);
+                }
+
+                .btn-icon.leave {
+                    color: var(--warning-dark);
+                }
+
+                .btn-icon:hover {
+                    transform: scale(1.2);
+                }
+
+                /* Modals / Popups */
+                .modal-overlay {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 1000;
+                    backdrop-filter: blur(3px);
+                }
+
+                .modal-content {
+                    background: var(--card-bg);
+                    padding: 30px;
+                    border-radius: 12px;
+                    width: 100%;
+                    max-width: 400px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                    animation: slideDown 0.3s ease-out;
+                }
+
+                @keyframes slideDown {
+                    from {
+                        transform: translateY(-20px);
+                        opacity: 0;
+                    }
+
+                    to {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                }
+
+                .modal-content h3 {
+                    margin-bottom: 20px;
+                    color: var(--text-main);
+                }
+
+                .form-group {
+                    margin-bottom: 20px;
+                }
+
+                .form-group label {
+                    display: block;
+                    margin-bottom: 8px;
+                    font-weight: 500;
+                }
+
+                .form-control {
+                    width: 100%;
+                    padding: 10px 15px;
+                    border: 1px solid var(--border-color);
+                    border-radius: 6px;
+                    font-size: 1rem;
+                }
+
+                .form-control:focus {
+                    outline: none;
+                    border-color: var(--primary);
+                    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+                }
+
+                .modal-footer {
+                    display: flex;
+                    gap: 10px;
+                    justify-content: flex-end;
+                }
+
+                .btn-outline {
+                    background: transparent;
+                    border: 1px solid var(--border-color);
+                    color: var(--text-main);
+                }
+
+                .btn-outline:hover {
+                    background: #f8f9fa;
+                }
+
+                .helper-text {
+                    font-size: 0.85rem;
+                    color: var(--text-muted);
+                    margin-top: 5px;
+                }
+
+                /* Responsive */
+                @media (max-width: 900px) {
+                    .main-grid {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .dashboard-header {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 15px;
+                    }
+
+                    .action-buttons {
+                        flex-wrap: wrap;
+                    }
+                }
+            </style>
         </head>
 
         <body>
             <div class="app-container">
-                <main class="main-content">
-                    <section class="library-section">
 
-                        <div class="library-header"
-                            style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
-                            <div class="title-area">
-                                <h2><i class="fas fa-users"></i> ${group.groupName}</h2>
-                                <c:if test="${not empty error}">
-                                    <p style="color: red; font-weight: bold;"><i class="fas fa-exclamation-circle"></i>
-                                        ${error}</p>
-                                </c:if>
-                            </div>
+                <header class="dashboard-header">
+                    <div class="title-area">
+                        <h2><i class="fas fa-users"></i> ${group.groupName}</h2>
+                        <c:if test="${not empty error}">
+                            <p class="error-msg"><i class="fas fa-exclamation-circle"></i> ${error}</p>
+                        </c:if>
+                    </div>
 
-                            <div style="display: flex; gap: 10px;">
-                                <div class="btn-create"
-                                    onclick="document.getElementById('submit-deck-popup').style.display='flex'"
-                                    style="background: #28a745;">
-                                    <span><i class="fas fa-share"></i> Chia sẻ Deck</span>
-                                </div>
+                    <div class="action-buttons">
+                        <c:if test="${isLeader}">
+                            <button class="btn btn-primary" onclick="openModal('add-member-popup')">
+                                <i class="fas fa-user-plus"></i> Thêm thành viên
+                            </button>
 
-                                <c:if test="${isLeader}">
-                                    <div class="btn-create"
-                                        onclick="document.getElementById('add-member-popup').style.display='flex'">
-                                        <span><i class="fas fa-user-plus"></i> Thêm thành viên</span>
+                            <form action="/groups/${group.id}/disband" method="post" style="margin: 0;"
+                                onsubmit="return confirm('CẢNH BÁO: Bạn có chắc chắn muốn giải tán nhóm này? Toàn bộ dữ liệu thành viên và bài chia sẻ sẽ bị xóa VĨNH VIỄN!');">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> Giải tán nhóm
+                                </button>
+                            </form>
+                        </c:if>
+                    </div>
+                </header>
+
+                <main class="main-grid">
+
+                    <div class="left-column">
+
+                        <section class="section-card">
+                            <h3 class="section-title approved"><i class="fas fa-book-open"></i> Thư viện của nhóm</h3>
+                            <div class="deck-grid">
+                                <c:forEach var="groupDeck" items="${approvedDecks}">
+                                    <div class="deck-item approved">
+                                        <a href="/client/deck/${groupDeck.deck.id}" class="deck-content">
+                                            <h4>${groupDeck.deck.title}</h4>
+                                            <p>${groupDeck.deck.des}</p>
+                                        </a>
                                     </div>
-
-                                    <form action="/groups/${group.id}/disband" method="post" style="margin: 0;"
-                                        onsubmit="return confirm('CẢNH BÁO: Bạn có chắc chắn muốn giải tán nhóm này? Toàn bộ dữ liệu thành viên và bài chia sẻ sẽ bị xóa VĨNH VIỄN!');">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <button type="submit" class="btn-create"
-                                            style="background: #dc3545; border: none; cursor: pointer; padding: 10px 15px;">
-                                            <span style="color: white;"><i class="fas fa-trash"></i> Giải tán
-                                                nhóm</span>
-                                        </button>
-                                    </form>
+                                </c:forEach>
+                                <c:if test="${empty approvedDecks}">
+                                    <p
+                                        style="color: var(--text-muted); grid-column: 1 / -1; text-align: center; padding: 20px;">
+                                        Nhóm chưa có bộ flashcard nào được chia sẻ.
+                                    </p>
                                 </c:if>
                             </div>
-                        </div>
+                        </section>
 
-                        <div style="display: flex; gap: 30px;">
-                            <div style="flex: 2;">
-                                <h3 style="margin-bottom: 15px;"><i class="fas fa-book-open"></i> Thư viện của nhóm</h3>
+                        <c:if test="${not empty pendingDecks}">
+                            <section class="section-card" style="background-color: #fffcf5; border: 1px solid #ffe8b3;">
+                                <h3 class="section-title pending"><i class="fas fa-clock"></i> Đang chờ duyệt</h3>
                                 <div class="deck-grid">
-                                    <c:forEach var="groupDeck" items="${approvedDecks}">
-                                        <div class="deck-card">
-                                            <a href="/client/deck/${groupDeck.deck.id}">
-                                                <div class="card-body" style="padding-top: 15px;">
-                                                    <h4>${groupDeck.deck.title}</h4>
-                                                    <p>${groupDeck.deck.des}</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </c:forEach>
-                                    <c:if test="${empty approvedDecks}">
-                                        <p style="color: gray;">Nhóm chưa có bộ flashcard nào được chia sẻ.</p>
-                                    </c:if>
-                                </div>
-
-                                <c:if test="${isLeader && not empty pendingDecks}">
-                                    <h3 style="margin-top: 40px; color: orange;"><i class="fas fa-clock"></i> Chờ duyệt
-                                    </h3>
-                                    <div class="deck-grid" style="margin-top: 15px;">
-                                        <c:forEach var="pending" items="${pendingDecks}">
-                                            <div class="deck-card" style="border: 2px dashed orange;">
-                                                <div class="card-body" style="padding-top: 15px;">
-                                                    <h4>${pending.deck.title}</h4>
-                                                </div>
-                                                <div class="card-footer" style="background: #fff8e1;">
+                                    <c:forEach var="pending" items="${pendingDecks}">
+                                        <div class="deck-item pending">
+                                            <div class="deck-content">
+                                                <h4>${pending.deck.title}</h4>
+                                                <p>Đang chờ Admin nhóm xác nhận.</p>
+                                            </div>
+                                            <c:if test="${isLeader}">
+                                                <div class="deck-footer">
                                                     <form action="/groups/${group.id}/approve-deck" method="post"
-                                                        style="margin: 0; width: 100%;">
+                                                        style="margin: 0;">
                                                         <input type="hidden" name="${_csrf.parameterName}"
                                                             value="${_csrf.token}" />
                                                         <input type="hidden" name="groupDeckId" value="${pending.id}">
-                                                        <button type="submit"
-                                                            style="background: none; border: none; color: #28a745; cursor: pointer; font-weight: bold;">
-                                                            <i class="fas fa-check"></i> Duyệt bài này
+                                                        <button type="submit" class="btn-approve">
+                                                            <i class="fas fa-check-circle"></i> Duyệt bài này
                                                         </button>
                                                     </form>
                                                 </div>
-                                            </div>
-                                        </c:forEach>
-                                    </div>
-                                </c:if>
-                            </div>
+                                            </c:if>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </section>
+                        </c:if>
 
-                            <div style="flex: 1; background: #f9f9f9; padding: 20px; border-radius: 10px;">
-                                <h3 style="margin-bottom: 15px;"><i class="fas fa-list-ul"></i> Thành viên
-                                    (${members.size()})</h3>
-                                <ul style="list-style: none; padding: 0;">
-                                    <c:forEach var="member" items="${members}">
-                                        <li
-                                            style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;">
-                                            <div>
-                                                <strong>${member.user.userName}</strong>
-                                                <c:if test="${member.groupRole == 'LEADER'}">
-                                                    <span
-                                                        style="font-size: 0.8rem; background: #ffc107; padding: 2px 5px; border-radius: 3px; margin-left: 5px;">Leader</span>
-                                                </c:if>
-                                            </div>
+                    </div>
 
+                    <div class="right-column">
+                        <section class="section-card">
+                            <h3 class="section-title"><i class="fas fa-list-ul"></i> Thành viên (${members.size()})</h3>
+                            <ul class="member-list">
+                                <c:forEach var="member" items="${members}">
+                                    <li class="member-item">
+                                        <div class="member-info">
+                                            <span class="member-name">${member.user.userName}</span>
+                                            <c:if test="${member.groupRole == 'LEADER'}">
+                                                <span class="badge-leader">Leader</span>
+                                            </c:if>
+                                        </div>
+
+                                        <div class="member-actions">
                                             <c:if test="${isLeader && member.groupRole != 'LEADER'}">
                                                 <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
                                                     onsubmit="return confirm('Mời thành viên này ra khỏi nhóm?');">
                                                     <input type="hidden" name="${_csrf.parameterName}"
                                                         value="${_csrf.token}" />
                                                     <input type="hidden" name="targetUserId" value="${member.user.id}">
-                                                    <button type="submit"
-                                                        style="background: none; border: none; color: red; cursor: pointer;"
-                                                        title="Kick khỏi nhóm">
+                                                    <button type="submit" class="btn-icon kick" title="Kick khỏi nhóm">
                                                         <i class="fas fa-user-minus"></i>
                                                     </button>
                                                 </form>
@@ -132,52 +521,57 @@
                                                     <input type="hidden" name="${_csrf.parameterName}"
                                                         value="${_csrf.token}" />
                                                     <input type="hidden" name="targetUserId" value="${member.user.id}">
-                                                    <button type="submit"
-                                                        style="background: none; border: none; color: orange; cursor: pointer;"
-                                                        title="Tự rời nhóm">
-                                                        <i class="fas fa-sign-out-alt"></i> Rời nhóm
+                                                    <button type="submit" class="btn-icon leave" title="Tự rời nhóm">
+                                                        <i class="fas fa-sign-out-alt"></i>
                                                     </button>
                                                 </form>
                                             </c:if>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </section>
+                    </div>
+
                 </main>
             </div>
 
-            <div id="add-member-popup" class="container-popup" style="display: none;">
-                <form class="popup" action="/groups/${group.id}/add-member" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    <h3>Thêm Thành Viên</h3>
-                    <label>Nhập Email người dùng:</label>
-                    <input type="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
-                    <div class="popup-buttons">
-                        <button type="submit" id="save">Thêm</button>
-                        <button type="button"
-                            onclick="document.getElementById('add-member-popup').style.display='none'">Hủy</button>
-                    </div>
-                </form>
+            <div id="add-member-popup" class="modal-overlay">
+                <div class="modal-content">
+                    <form action="/groups/${group.id}/add-member" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <h3><i class="fas fa-user-plus"></i> Thêm Thành Viên</h3>
+                        <div class="form-group">
+                            <label>Nhập Email người dùng:</label>
+                            <input type="email" name="email" class="form-control" required placeholder="vidu@email.com">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline"
+                                onclick="closeModal('add-member-popup')">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Thêm</button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
-            <div id="submit-deck-popup" class="container-popup" style="display: none;">
-                <form class="popup" action="/groups/${group.id}/submit-deck" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    <h3>Chia sẻ Deck vào nhóm</h3>
-                    <label>Nhập ID bộ Deck của bạn:</label>
-                    <input type="number" name="deckId" required style="width: 100%; padding: 10px; margin-bottom: 20px;"
-                        placeholder="Ví dụ: 15">
-                    <p style="font-size: 0.9rem; color: gray; margin-bottom: 15px;">* Nếu bạn không phải Leader, bài sẽ
-                        cần chờ duyệt.</p>
-                    <div class="popup-buttons">
-                        <button type="submit" id="save">Chia sẻ</button>
-                        <button type="button"
-                            onclick="document.getElementById('submit-deck-popup').style.display='none'">Hủy</button>
-                    </div>
-                </form>
-            </div>
+
+
+            <script>
+                function openModal(modalId) {
+                    document.getElementById(modalId).style.display = 'flex';
+                }
+
+                function closeModal(modalId) {
+                    document.getElementById(modalId).style.display = 'none';
+                }
+
+                // Đóng modal khi click ra ngoài vùng nội dung
+                window.onclick = function (event) {
+                    if (event.target.classList.contains('modal-overlay')) {
+                        event.target.style.display = "none";
+                    }
+                }
+            </script>
         </body>
 
         </html>

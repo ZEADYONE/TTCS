@@ -17,6 +17,7 @@ import com.example.flc.domain.User;
 import com.example.flc.domain.DTO.DeckProgress;
 import com.example.flc.repository.UserRepository;
 import com.example.flc.service.DeckService;
+import com.example.flc.service.GroupService;
 
 @Controller
 @RequestMapping("/client")
@@ -24,11 +25,13 @@ public class LCCController {
 
     private final DeckService deckService;
     private final UserRepository userRepository;
+    private final GroupService groupService;
 
     // LIBRARY
-    public LCCController(DeckService deckService, UserRepository userRepository) {
+    public LCCController(DeckService deckService, UserRepository userRepository, GroupService groupService) {
         this.userRepository = userRepository;
         this.deckService = deckService;
+        this.groupService = groupService;
     }
 
     @GetMapping("/library")
@@ -41,6 +44,7 @@ public class LCCController {
         User user = userRepository.findByEmail(principal.getName());
 
         model.addAttribute("currentUser", user.getId());
+        model.addAttribute("myGroups", groupService.getMyGroups(user));
         // 2. Cấu hình phân trang (6 item mỗi trang)
         Pageable pageable = PageRequest.of(page - 1, 6);
 

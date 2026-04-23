@@ -96,6 +96,12 @@ public class GroupController {
         return "redirect:/groups/" + groupId;
     }
 
+    @PostMapping("/share-from-library")
+    public String shareFromLibrary(@RequestParam Long groupId, @RequestParam Long deckId, Principal principal) {
+        groupService.submitDeckToGroup(groupId, deckId, userRepository.findByEmail(principal.getName()));
+        return "redirect:/client/library";
+    }
+
     @PostMapping("/{groupId}/approve-deck")
     public String approveDeck(@PathVariable Long groupId, @RequestParam Long groupDeckId, Principal principal) {
         groupService.approveDeck(groupId, groupDeckId, userRepository.findByEmail(principal.getName()));
