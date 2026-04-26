@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.example.flc.enums.StatusDeckGroup;
 
 @Entity
 @Table(name = "group_deck")
@@ -25,8 +26,8 @@ public class GroupDeck {
     private Deck deck;
 
     // Quyết định deck có được hiện trong nhóm hay không (Lead duyệt)
-    @Column(name = "is_approved", nullable = false)
-    private Boolean isApproved;
+    @Column(name = "status", nullable = false)
+    private String status = StatusDeckGroup.PENDING.name();
 
     public Integer getId() {
         return id;
@@ -52,12 +53,12 @@ public class GroupDeck {
         this.deck = deck;
     }
 
-    public Boolean getIsApproved() {
-        return isApproved;
+    // Đã thay thế get/set của isApproved bằng get/set của status
+    public String getStatus() {
+        return status;
     }
 
-    public void setIsApproved(Boolean isApproved) {
-        this.isApproved = isApproved;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
 }

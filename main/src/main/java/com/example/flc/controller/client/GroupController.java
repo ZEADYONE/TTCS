@@ -41,7 +41,7 @@ public class GroupController {
 
         model.addAttribute("group", group);
         model.addAttribute("members", groupService.getMembers(groupId));
-        model.addAttribute("approvedDecks", groupService.getApprovedDecks(groupId));
+        model.addAttribute("approvedDecks", groupService.getStatusDecks(groupId, "APPROVED"));
 
         // SỬA DÒNG NÀY: Đổi "isLead" thành "isLeader"
         model.addAttribute("isLeader", isLead);
@@ -49,7 +49,13 @@ public class GroupController {
         model.addAttribute("currentUserId", currentUser.getId());
 
         if (isLead) {
-            model.addAttribute("pendingDecks", groupService.getPendingDecks(groupId));
+            model.addAttribute("pendingDecks", groupService.getStatusDecks(groupId, "PENDING"));
+            model.addAttribute("rejectedDecks", groupService.getStatusDecks(groupId, "REJECTED"));
+        } else {
+            model.addAttribute("rejectedMemberDecks",
+                    groupService.getStatusMemberDecks(groupId, "REJECTED", currentUser.getId()));
+            model.addAttribute("pendingMemberDecks",
+                    groupService.getStatusMemberDecks(groupId, "PENDING", currentUser.getId()));
         }
 
         return "client/group/detail";
@@ -105,6 +111,12 @@ public class GroupController {
     @PostMapping("/{groupId}/approve-deck")
     public String approveDeck(@PathVariable Long groupId, @RequestParam Long groupDeckId, Principal principal) {
         groupService.approveDeck(groupId, groupDeckId, userRepository.findByEmail(principal.getName()));
+        return "redirect:/groups/" + groupId;
+    }
+
+    @PostMapping("/{groupId}/reject-deck")
+    public String rejectDeck(@PathVariable Long groupId, @RequestParam Long groupDeckId, Principal principal) {
+        groupService.rejectDeck(groupId, groupDeckId, userRepository.findByEmail(principal.getName()));
         return "redirect:/groups/" + groupId;
     }
 }

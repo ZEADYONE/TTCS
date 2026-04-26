@@ -74,10 +74,11 @@ public class AdminGroupController {
 
         model.addAttribute("group", group);
         model.addAttribute("members", groupService.getMembers(groupId));
-        model.addAttribute("approvedDecks", groupService.getApprovedDecks(groupId));
+        model.addAttribute("approvedDecks", groupService.getStatusDecks(groupId, "APPROVED"));
         model.addAttribute("isLeader", true); // Bỏ qua check, ép luôn là true để view có full action
         model.addAttribute("currentUserId", currentUser.getId());
-        model.addAttribute("pendingDecks", groupService.getPendingDecks(groupId));
+        model.addAttribute("pendingDecks", groupService.getStatusDecks(groupId, "PENDING"));
+        model.addAttribute("rejectedDecks", groupService.getStatusDecks(groupId, "REJECTED"));
 
         return "client/group/detail"; // Tận dụng lại giao diện detail của client
     }

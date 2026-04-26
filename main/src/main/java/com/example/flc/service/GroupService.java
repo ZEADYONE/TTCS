@@ -40,7 +40,7 @@ public class GroupService {
         if (user.getRole() != null && "ADMIN".equals(user.getRole().getName())) {
             return true;
         }
-        
+
         List<GroupMember> members = memberRepo.findByGroupId(groupId);
         for (GroupMember m : members) {
             if (m.getUser().getId() == user.getId() && "LEADER".equals(m.getGroupRole())) {
@@ -60,7 +60,7 @@ public class GroupService {
         StudyGroup group = new StudyGroup();
         group.setGroupName(name);
         group.setDescription(description);
-        group = groupRepo.save(group); 
+        group = groupRepo.save(group);
 
         // Người tạo tự động là LEADER
         GroupMember member = new GroupMember();
@@ -140,10 +140,12 @@ public class GroupService {
         StudyGroup group = groupRepo.findById(groupId).orElseThrow();
 
         // 1. Xóa toàn bộ Deck trong nhóm (Tránh lỗi khóa ngoại)
-        List<GroupDeck> approvedDecks = groupDeckRepo.findByGroupIdAndIsApprovedTrue(groupId);
-        List<GroupDeck> pendingDecks = groupDeckRepo.findByGroupIdAndIsApprovedFalse(groupId);
+        List<GroupDeck> approvedDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "APPROVED");
+        List<GroupDeck> pendingDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "PENDING");
+        List<GroupDeck> rejectedDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "REJECTED");
         groupDeckRepo.deleteAll(approvedDecks);
         groupDeckRepo.deleteAll(pendingDecks);
+        groupDeckRepo.deleteAll(rejectedDecks);
 
         // 2. Xóa toàn bộ Member trong nhóm
         List<GroupMember> members = memberRepo.findByGroupId(groupId);
@@ -166,8 +168,7 @@ public class GroupService {
         gd.setGroup(group);
         gd.setDeck(deck);
 
-        boolean isLead = checkIsLeader(groupId, currentUser);
-        gd.setIsApproved(isLead);
+        gd.setStatus("PENDING");
 
         groupDeckRepo.save(gd);
     }
@@ -178,7 +179,17 @@ public class GroupService {
             throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền duyệt.");
         }
         GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
-        gd.setIsApproved(true);
+        gd.setStatus(" APPROVED");
+        groupDeckRepo.save(gd);
+    }
+
+    @Transactional
+    public void rejectDeck(Long groupId, Long groupDeckId, User currentUser) {
+        if (!checkIsLeader(groupId, currentUser)) {
+            throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền từ chối.");
+        }
+        GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
+        gd.setStatus("REJECTED");
         groupDeckRepo.save(gd);
     }
 
@@ -195,12 +206,12 @@ public class GroupService {
         return memberRepo.findByGroupId(groupId);
     }
 
-    public List<GroupDeck> getApprovedDecks(Long groupId) {
-        return groupDeckRepo.findByGroupIdAndIsApprovedTrue(groupId);
+    public List<GroupDeck> getStatusDecks(Long groupId, String status) {
+        return groupDeckRepo.findByGroupDeckStatus(groupId, status);
     }
 
-    public List<GroupDeck> getPendingDecks(Long groupId) {
-        return groupDeckRepo.findByGroupIdAndIsApprovedFalse(groupId);
+    public List<GroupDeck> getStatusMemberDecks(Long groupId, String status, Long userId) {
+        return groupDeckRepo.findByGroupMemberDeckStatus(groupId, status, userId);
     }
 
     public Page<AdminGroupDTO> getAdminGroups(String keyword, Pageable pageable) {
@@ -217,10 +228,10 @@ public class GroupService {
             dto.setGroupName(group.getGroupName());
             dto.setDescription(group.getDescription());
             dto.setCreatedAt(group.getCreatedAt());
-            
+
             List<GroupMember> members = memberRepo.findByGroupId(group.getId().longValue());
             dto.setMemberCount(members.size());
-            
+
             String leaderName = "Unknown";
             for (GroupMember m : members) {
                 if ("LEADER".equals(m.getGroupRole())) {
@@ -229,7 +240,7 @@ public class GroupService {
                 }
             }
             dto.setLeaderName(leaderName);
-            
+
             return dto;
         });
     }
