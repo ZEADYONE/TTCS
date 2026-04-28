@@ -6,13 +6,6 @@
     --header-bg: #0a0e27;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 
 body {
     background-color: white;

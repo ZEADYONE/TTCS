@@ -2,6 +2,7 @@ package com.example.flc.domain;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,19 @@ public class Progress {
     private boolean isCorrect; // ✅ đúng / sai
 
     private LocalDateTime updatedAt; // ✅
+
+    // Các biến bắt buộc cho thuật toán SM-2
+    @Column(name = "repetitions")
+    private int repetitions = 0;
+
+    @Column(name = "interval_days")
+    private int intervalDays = 0;
+
+    @Column(name = "ease_factor")
+    private float easeFactor = 2.5f;
+
+    @Column(name = "next_review_date")
+    private LocalDateTime nextReviewDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -66,6 +80,50 @@ public class Progress {
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public void setCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public int getRepetitions() {
+        return repetitions;
+    }
+
+    public void setRepetitions(int repetitions) {
+        this.repetitions = repetitions;
+    }
+
+    public int getIntervalDays() {
+        return intervalDays;
+    }
+
+    public void setIntervalDays(int intervalDays) {
+        this.intervalDays = intervalDays;
+    }
+
+    public float getEaseFactor() {
+        return easeFactor;
+    }
+
+    public void setEaseFactor(float easeFactor) {
+        this.easeFactor = easeFactor;
+    }
+
+    public LocalDateTime getNextReviewDate() {
+        return nextReviewDate;
+    }
+
+    public void setNextReviewDate(LocalDateTime nextReviewDate) {
+        this.nextReviewDate = nextReviewDate;
     }
 
     @Override

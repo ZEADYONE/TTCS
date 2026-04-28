@@ -63,8 +63,7 @@
                             <a href="/client/course" class="nav-item">
                                 <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
                             </a>
-                            <a href="/groups" class="nav-item active"
-                                style="background: rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color);">
+                            <a href="/groups" class="nav-item">
                                 <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
                             </a>
                         </nav>

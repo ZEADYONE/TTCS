@@ -72,8 +72,7 @@
                             <a href="/client/course" class="nav-item">
                                 <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
                             </a>
-                            <a href="/groups" class="nav-item active"
-                                style="background: rgba(0,0,0,0.05); border-left: 4px solid var(--primary-color);">
+                            <a href="/groups" class="nav-item">
                                 <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
                             </a>
                         </nav>
@@ -86,8 +85,22 @@
                                     <h2>My library</h2>
                                     <p>Manage your personal collections and study progress</p>
                                 </div>
-                                <div class="btn-create">
-                                    <span>Create deck</span>
+
+                                <div style="display: flex; gap: 15px; align-items: center;">
+
+                                    <a href="/client/review" style="text-decoration: none;">
+                                        <div class="btn-review"
+                                            style="background-color: #28a745; border-color: #28a745;">
+                                            <i class="fas fa-play" style="margin-right: 5px;"></i>
+                                            <span>Review cards</span>
+                                        </div>
+                                    </a>
+
+                                    <div class="btn-create">
+                                        <i class="fas fa-plus" style="margin-right: 5px;"></i>
+                                        <span>Create deck</span>
+                                    </div>
+
                                 </div>
                             </div>
 

@@ -67,13 +67,16 @@
                             <a href="/admin/user" class="menu-item">
                                 <i class="fa-solid fa-user-large"></i> User
                             </a>
-                            <a href="/admin/deck" class="menu-item">
+                            <a href="/admin/deck" class="menu-item ">
                                 <i class="fa-solid fa-book-open"></i> Deck FlashCard
                             </a>
                             <a href="/admin/course" class="menu-item">
                                 <i class="fa-solid fa-graduation-cap"></i> Course
                             </a>
-                            <a href="/admin/role" class="menu-item  active">
+                            <a href="/admin/groups" class="menu-item">
+                                <i class="fa-solid fa-users"></i> Group
+                            </a>
+                            <a href="/admin/role" class="menu-item active">
                                 <i class="fa-solid fa-cube"></i> Role
                             </a>
                         </nav>

@@ -168,6 +168,17 @@ a {
     font-size: 1rem;
 }
 
+.btn-review {
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
 /* Toolbar */
 .toolbar {
     display: flex;
