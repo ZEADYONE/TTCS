@@ -1,7 +1,12 @@
 package com.example.flc.controller.client;
 
 import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +26,20 @@ public class GroupController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String listGroups(Model model, Principal principal) {
-        model.addAttribute("myGroups", groupService.getMyGroups(userRepository.findByEmail(principal.getName())));
+    public String listGroups(Model model, Principal principal,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+
+        Pageable pageable = PageRequest.of(page - 1, 6);
+        Page<StudyGroup> listGroups = groupService.getMyGroups(userRepository.findByEmail(principal.getName()), keyword,
+                pageable);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", listGroups.getTotalPages());
+
+        model.addAttribute("keyword", keyword);
+
+        model.addAttribute("myGroups", listGroups.getContent());
         return "client/group/list";
     }
 

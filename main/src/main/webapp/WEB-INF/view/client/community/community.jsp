@@ -73,7 +73,7 @@
                             <a href="/client/course" class="nav-item">
                                 <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
                             </a>
-                            <a href="/groups" class="nav-item active">
+                            <a href="/groups" class="nav-item">
                                 <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
                             </a>
                         </nav>
@@ -120,9 +120,9 @@
                                         <!-- CLICK vào deck -->
                                         <a href="/client/deck/${deck.id}">
                                             <div class="card-top">
+
                                                 <img src="/images/client/${deck.image}" />
 
-                                                <!-- Scope icon -->
 
                                                 <span class="card-count">${deck.card.size()} cards</span>
                                             </div>
@@ -135,13 +135,12 @@
 
                                         <!-- Footer -->
                                         <div class="card-footer">
-                                            <div>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
                                                 <span>
                                                     <i class="far fa-user"></i>
                                                     ${deck.user.userName}
                                                 </span>
                                                 <c:choose>
-
                                                     <c:when test="${deck.isFeatured}">
                                                         <i style="color: rgb(255, 212, 59);"
                                                             class="fa-solid fa-star text-warning"
@@ -154,7 +153,13 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
-                                            <div class="card-actions">
+
+                                            <div class="card-actions" style="display: flex; align-items: center;">
+                                                <button type="button" class="btn-report" title="Báo cáo vi phạm"
+                                                    onclick="openReportModal('${deck.id}')">
+                                                    <i class="fa-solid fa-circle-exclamation"
+                                                        style="color: rgb(255, 81, 59);"></i>
+                                                </button>
                                             </div>
                                         </div>
 
@@ -204,6 +209,45 @@
                         </section>
                     </main>
                 </div>
+
+                // REPORT
+                <div id="report-popup" class="container-popup" style="display: none;">
+                    <form id="report" class="popup" action="/client/report" method="post" modelAttribute="reportForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+
+                        <h3 style="color: #ef4444; margin-bottom: 15px;">
+                            <i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 81, 59);"></i> Báo cáo bộ
+                            thẻ
+                        </h3>
+
+                        <p style="font-size: 0.9rem; color: #6b7280; margin-bottom: 15px;">
+                            Vui lòng cho quản trị viên biết vấn đề bạn gặp phải với bộ thẻ này (VD: Từ vựng sai, nội
+                            dung spam, v.v.)
+                        </p>
+
+                        <label for="report-desc" style="font-weight: 600;">Chi tiết vấn đề:</label>
+                        <textarea id="report-desc" name="description" rows="4" class="report-textarea"
+                            placeholder="Nhập mô tả..." required></textarea>
+
+                        <div class="popup-buttons">
+                            <button type="submit" class="btn-submit-report">Gửi báo
+                                cáo</button>
+                            <button type="button" onclick="closeReportModal()" class="btn-cancel-report">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+
+                <script>
+                    function openReportModal(deckId) {
+                        document.getElementById('report').action = '/client/report/' + deckId;
+                        document.getElementById('report-popup').style.display = 'flex';
+                    }
+                    function closeReportModal() {
+                        document.getElementById('report-popup').style.display = 'none';
+                        document.getElementById('report-desc').value = ''; // Xóa chữ cũ khi đóng
+                    }
+                </script>
                 <script src="/js/client/script.js"></script>
                 <script src="/js/client/head-foot.js"></script>
             </body>

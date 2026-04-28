@@ -43,25 +43,6 @@ document.querySelectorAll('.menu-item').forEach(item => {
 
 // });
 
-const filterBtn = document.getElementById('filterBtn');
-const filterMenu = document.getElementById('filterMenu');
-
-// Toggle menu filter
-filterBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isVisible = filterMenu.style.display === 'flex';
-    filterMenu.style.display = isVisible ? 'none' : 'flex';
-});
-
-// Đóng menu nếu click ra ngoài
-document.addEventListener('click', () => {
-    filterMenu.style.display = 'none';
-});
-
-// Ngăn menu bị đóng khi click bên trong nó
-filterMenu.addEventListener('click', (e) => {
-    e.stopPropagation();
-});
 
 // INFOR
 document.addEventListener('DOMContentLoaded', () => {
@@ -85,4 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
         dropdown.classList.remove('show');
         if (arrow) arrow.style.transform = 'rotate(0deg)';
     });
+});
+
+const filterBtn = document.getElementById('filterBtn');
+const filterMenu = document.getElementById('filterMenu');
+
+// Toggle menu filter
+filterBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = filterMenu.style.display === 'flex';
+    filterMenu.style.display = isVisible ? 'none' : 'flex';
+});
+
+// Đóng menu nếu click ra ngoài
+document.addEventListener('click', () => {
+    filterMenu.style.display = 'none';
+});
+
+// Ngăn menu bị đóng khi click bên trong nó
+filterMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
 });

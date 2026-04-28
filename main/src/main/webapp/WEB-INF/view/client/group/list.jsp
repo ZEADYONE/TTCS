@@ -81,7 +81,18 @@
                                     <span><i class="fas fa-plus"></i> Create Group</span>
                                 </div>
                             </div>
-
+                            <div class="toolbar">
+                                <form action="/groups" method="GET" style="margin: 0; flex-grow: 1;">
+                                    <div class="search-box">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" name="keyword" value="${keyword}"
+                                            placeholder="Search library ...">
+                                        <c:forEach items="${selectedFilters}" var="filter">
+                                            <input type="hidden" name="filters" value="${filter}">
+                                        </c:forEach>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="deck-grid">
                                 <c:forEach var="studyGroup" items="${myGroups}">
                                     <div class="deck-card">
@@ -103,6 +114,45 @@
                                     <p style="color: gray;">Bạn chưa tham gia nhóm nào. Hãy tạo nhóm mới!</p>
                                 </c:if>
                             </div>
+                            <c:if test="${totalPages > 1}">
+                                <c:url value="/groups" var="baseUrl">
+                                    <c:if test="${not empty keyword}">
+                                        <c:param name="keyword" value="${keyword}" />
+                                    </c:if>
+                                    <c:forEach items="${selectedFilters}" var="f">
+                                        <c:param name="filters" value="${f}" />
+                                    </c:forEach>
+                                </c:url>
+
+                                <nav aria-label="Page navigation" style="margin-top: 20px;">
+                                    <ul class="custom-pagination">
+
+                                        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+                                            <a class="page-link"
+                                                href="${baseUrl}${baseUrl.contains('?') ? '&' : '?'}page=${currentPage - 1}"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+
+                                        <c:forEach begin="1" end="${totalPages}" var="i">
+                                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                                <a class="page-link"
+                                                    href="${baseUrl}${baseUrl.contains('?') ? '&' : '?'}page=${i}">${i}</a>
+                                            </li>
+                                        </c:forEach>
+
+                                        <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+                                            <a class="page-link"
+                                                href="${baseUrl}${baseUrl.contains('?') ? '&' : '?'}page=${currentPage + 1}"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                            </c:if>
                         </section>
                     </main>
                 </div>

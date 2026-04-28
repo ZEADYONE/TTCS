@@ -74,6 +74,9 @@
                             <a href="/admin/groups" class="menu-item">
                                 <i class="fa-solid fa-users"></i> Group
                             </a>
+                            <a href="/admin/reports" class="menu-item">
+                                <i class="fa-solid fa-flag"></i> Reports
+                            </a>
                             <a href="/admin/role" class="menu-item">
                                 <i class="fa-solid fa-cube"></i> Role
                             </a>

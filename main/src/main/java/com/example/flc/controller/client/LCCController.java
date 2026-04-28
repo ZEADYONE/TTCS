@@ -44,7 +44,7 @@ public class LCCController {
         User user = userRepository.findByEmail(principal.getName());
 
         model.addAttribute("currentUser", user.getId());
-        model.addAttribute("myGroups", groupService.getMyGroups(user));
+        // model.addAttribute("myGroups", groupService.getMyGroups(user));
         // 2. Cấu hình phân trang (6 item mỗi trang)
         Pageable pageable = PageRequest.of(page - 1, 6);
 

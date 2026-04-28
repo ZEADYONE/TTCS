@@ -194,8 +194,9 @@ public class GroupService {
     }
 
     // --- Các hàm lấy dữ liệu View ---
-    public List<StudyGroup> getMyGroups(User user) {
-        return memberRepo.findGroupsByUser(user);
+    public Page<StudyGroup> getMyGroups(User user, String keyword, Pageable pageable) {
+        String searchKeyword = (keyword != null && !keyword.isEmpty()) ? keyword : null;
+        return memberRepo.findGroupsByUser(user, searchKeyword, pageable);
     }
 
     public StudyGroup getGroupById(Long id) {

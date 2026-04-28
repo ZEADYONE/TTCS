@@ -610,3 +610,113 @@ a {
     background-color: #fff;
     border-color: #dee2e6;
 }
+
+/* CSS cho nút Report trong thẻ Deck */
+.btn-report {
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    /* Màu xám nhạt */
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    font-size: 1.1rem;
+}
+
+.btn-report:hover {
+    color: #ef4444;
+    /* Màu đỏ cảnh báo */
+    background-color: #fee2e2;
+    /* Nền đỏ nhạt */
+    transform: scale(1.05);
+    /* Phóng to nhẹ */
+}
+
+.btn-report:active {
+    transform: scale(0.95);
+    /* Hiệu ứng lún xuống khi click */
+}
+
+/* Container chứa 2 nút */
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    /* Đẩy các nút sang bên phải */
+    gap: 12px;
+    /* Khoảng cách giữa 2 nút */
+    margin-top: 20px;
+}
+
+/* Style chung cho cả 2 nút trong popup */
+.popup-buttons button {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nút Gửi báo cáo (Nút chính - Đỏ) */
+.btn-submit-report {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+}
+
+.btn-submit-report:hover {
+    background-color: #dc2626;
+    /* Đỏ đậm hơn khi hover */
+    box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-submit-report:active {
+    transform: translateY(1px);
+}
+
+/* Nút Hủy (Nút phụ - Xám nhạt) */
+.btn-cancel-report {
+    background-color: white;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+}
+
+.btn-cancel-report:hover {
+    background-color: #f3f4f6;
+    /* Xám nhạt khi hover */
+    color: #1f2937;
+    border-color: #9ca3af;
+}
+
+.btn-cancel-report:active {
+    background-color: #e5e7eb;
+}
+
+/* Khung nhập liệu cho Modal Report */
+.report-textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    resize: vertical;
+    /* Chỉ cho phép kéo giãn chiều dọc */
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.report-textarea:focus {
+    outline: none;
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}

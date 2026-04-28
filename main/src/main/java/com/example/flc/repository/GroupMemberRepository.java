@@ -2,6 +2,8 @@ package com.example.flc.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,8 +19,12 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Intege
 
     List<GroupMember> findByGroupId(Long groupId);
 
-    @Query("SELECT gm.group FROM GroupMember gm WHERE gm.user = :user")
-    List<StudyGroup> findGroupsByUser(@Param("user") User user);
+    @Query("SELECT gm.group FROM GroupMember gm " +
+            "JOIN gm.group g " +
+            "WHERE gm.user = :user " +
+            "AND (:keyword IS NULL OR LOWER(g.groupName) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+
+    Page<StudyGroup> findGroupsByUser(@Param("user") User user, @Param("keyword") String keyword, Pageable pageable);
 
     java.util.Optional<GroupMember> findByGroupAndUser(StudyGroup group, User user);
 
