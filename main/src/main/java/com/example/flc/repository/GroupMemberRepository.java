@@ -28,5 +28,8 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Intege
 
     java.util.Optional<GroupMember> findByGroupAndUser(StudyGroup group, User user);
 
+    @Query("SELECT gm.group FROM GroupMember gm WHERE gm.user = :user")
+    List<StudyGroup> findGroupsByUserShare(User user);
+
     void deleteByGroupId(Integer groupId);
 }

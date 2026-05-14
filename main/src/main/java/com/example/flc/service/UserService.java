@@ -88,4 +88,8 @@ public class UserService {
 
         return userRepository.findWithFilter(searchKeyword, statusFilter, roleFilter, pageable);
     }
+
+    public boolean existsByEmail(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
 }

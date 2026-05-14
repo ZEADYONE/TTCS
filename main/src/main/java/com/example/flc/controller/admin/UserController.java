@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.flc.domain.Deck;
 import com.example.flc.domain.Role;
@@ -72,7 +73,7 @@ public class UserController {
     }
 
     // CREATE USER
-    @RequestMapping("admin/user/create")
+    @GetMapping("admin/user/create")
     public String getUserPage(Model model) {
         model.addAttribute("newUser", new User());
         // model.addAttribute("roles", this.roleService.getAll());
@@ -83,28 +84,30 @@ public class UserController {
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "admin/user/create", method = RequestMethod.POST)
-    public String createUserPage(Model model, @ModelAttribute("newUser") @Valid User newUser,
+    @PostMapping(value = "admin/user/create")
+    public String createUserPage(
+            Model model,
+            @ModelAttribute("newUser") @Valid User newUser,
             BindingResult bindingResult) {
 
-        // ERROR VALID
-        List<FieldError> errors = bindingResult.getFieldErrors();
-        for (FieldError error : errors) {
-            System.out.println(error.getField() + "=>>>>>>>>>>>>>>>>>>>>>>>>> " + error.getDefaultMessage());
+        if (this.userService.existsByEmail(newUser.getEmail())) {
+            bindingResult.rejectValue("email", "error.email", "Email đã tồn tại");
         }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", this.roleService.getAll());
             return "admin/user/create";
         }
 
-        // HASH CODE
-        String hassPassWord = this.passwordEncoder.encode(newUser.getPassWord());
-        newUser.setPassWord(hassPassWord);
+        String hashedPassword = this.passwordEncoder.encode(newUser.getPassWord());
+        newUser.setPassWord(hashedPassword);
 
         Role role = roleService.getById(newUser.getRole().getId());
         newUser.setRole(role);
         newUser.setStatus(true);
+
         this.userService.handelSaveUser(newUser);
+
         return "redirect:/admin/user";
     }
 

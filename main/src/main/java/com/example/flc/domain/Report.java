@@ -22,8 +22,6 @@ public class Report {
     // Trạng thái: false (chưa xử lý), true (đã xử lý xong)
     private boolean status = false;
 
-    // --- 2 TRƯỜNG BẮT BUỘC ĐỂ GIỮ LIÊN KẾT 1-N ---
-
     @ManyToOne
     @JoinColumn(name = "deck_id", nullable = false)
     private Deck deck;

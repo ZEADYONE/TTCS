@@ -179,7 +179,7 @@ public class GroupService {
             throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền duyệt.");
         }
         GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
-        gd.setStatus(" APPROVED");
+        gd.setStatus("APPROVED");
         groupDeckRepo.save(gd);
     }
 
@@ -197,6 +197,10 @@ public class GroupService {
     public Page<StudyGroup> getMyGroups(User user, String keyword, Pageable pageable) {
         String searchKeyword = (keyword != null && !keyword.isEmpty()) ? keyword : null;
         return memberRepo.findGroupsByUser(user, searchKeyword, pageable);
+    }
+
+    public List<StudyGroup> getMyGroupsShare(User user) {
+        return memberRepo.findGroupsByUserShare(user);
     }
 
     public StudyGroup getGroupById(Long id) {

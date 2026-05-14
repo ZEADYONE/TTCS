@@ -101,7 +101,7 @@ public class GroupController {
         }
     }
 
-    // --- API GIẢI TÁN NHÓM ---
+    // --- GIẢI TÁN NHÓM ---
     @PostMapping("/{groupId}/disband")
     public String disbandGroup(@PathVariable Long groupId, Principal principal, Model model) {
         try {

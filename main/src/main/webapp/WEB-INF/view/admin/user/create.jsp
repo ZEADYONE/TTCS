@@ -80,10 +80,9 @@
                                 </c:set>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <form:input path="Email"
+                                    <form:input path="email"
                                         class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" type="email"
                                         placeholder="Email" />
-
                                     <div class="invalid-feedback d-block">
                                         ${errorEmail}
                                     </div>
