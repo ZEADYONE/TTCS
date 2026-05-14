@@ -197,9 +197,9 @@ public class GroupService {
 
     @Transactional
     public void hideDeck(Long groupId, Long groupDeckId, User currentUser) {
-        if (!checkIsLeader(groupId, currentUser)) {
-            throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền ẩn bộ bài này.");
-        }
+        // if (!checkIsLeader(groupId, currentUser)) {
+        // throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền ẩn bộ bài này.");
+        // }
         GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
         gd.setStatus("HIDDEN");
         groupDeckRepo.save(gd);

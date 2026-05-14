@@ -112,12 +112,16 @@
                                                 <p>${groupDeck.deck.des}</p>
                                             </div>
                                         </a>
-                                        <c:if test="${isLeader}">
+                                        <c:if test="${isLeader or groupDeck.deck.user.id == currentUserId}">
                                             <div class="deck-footer">
-                                                <form action="/groups/${group.id}/hide-deck" method="post" style="margin: 0; flex: 1; display: flex;">
-                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                <form action="/groups/${group.id}/hide-deck" method="post"
+                                                    style="margin: 0; flex: 1; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
                                                     <input type="hidden" name="groupDeckId" value="${groupDeck.id}">
-                                                    <button type="submit" class="btn-reject" style="width: 100%; justify-content: center;" onclick="return confirm('Bạn có chắc chắn muốn ẩn deck này khỏi nhóm?');">
+                                                    <button type="submit" class="btn-reject"
+                                                        style="width: 100%; justify-content: center;"
+                                                        onclick="return confirm('Bạn có chắc chắn muốn ẩn deck này khỏi nhóm?');">
                                                         <i class="fas fa-eye-slash"></i> Ẩn
                                                     </button>
                                                 </form>
