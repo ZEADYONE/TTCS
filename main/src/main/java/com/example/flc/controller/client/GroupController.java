@@ -136,4 +136,10 @@ public class GroupController {
         groupService.rejectDeck(groupId, groupDeckId, userRepository.findByEmail(principal.getName()));
         return "redirect:/groups/" + groupId;
     }
+
+    @PostMapping("/{groupId}/hide-deck")
+    public String hideDeck(@PathVariable Long groupId, @RequestParam Long groupDeckId, Principal principal) {
+        groupService.hideDeck(groupId, groupDeckId, userRepository.findByEmail(principal.getName()));
+        return "redirect:/groups/" + groupId;
+    }
 }

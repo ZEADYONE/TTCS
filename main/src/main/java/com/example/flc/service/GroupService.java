@@ -143,9 +143,11 @@ public class GroupService {
         List<GroupDeck> approvedDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "APPROVED");
         List<GroupDeck> pendingDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "PENDING");
         List<GroupDeck> rejectedDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "REJECTED");
+        List<GroupDeck> hiddenDecks = groupDeckRepo.findByGroupDeckStatus(groupId, "HIDDEN");
         groupDeckRepo.deleteAll(approvedDecks);
         groupDeckRepo.deleteAll(pendingDecks);
         groupDeckRepo.deleteAll(rejectedDecks);
+        groupDeckRepo.deleteAll(hiddenDecks);
 
         // 2. Xóa toàn bộ Member trong nhóm
         List<GroupMember> members = memberRepo.findByGroupId(groupId);
@@ -190,6 +192,16 @@ public class GroupService {
         }
         GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
         gd.setStatus("REJECTED");
+        groupDeckRepo.save(gd);
+    }
+
+    @Transactional
+    public void hideDeck(Long groupId, Long groupDeckId, User currentUser) {
+        if (!checkIsLeader(groupId, currentUser)) {
+            throw new RuntimeException("Chỉ Trưởng nhóm mới có quyền ẩn bộ bài này.");
+        }
+        GroupDeck gd = groupDeckRepo.findById(groupDeckId).orElseThrow();
+        gd.setStatus("HIDDEN");
         groupDeckRepo.save(gd);
     }
 

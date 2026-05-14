@@ -104,11 +104,25 @@
                                     style="color: var(--success)"></i> Thư viện của nhóm</h3>
                             <div class="deck-grid">
                                 <c:forEach var="groupDeck" items="${approvedDecks}">
-                                    <div class="deck-item approved">
-                                        <a href="/client/deck/${groupDeck.deck.id}" class="deck-content">
-                                            <h4>${groupDeck.deck.title}</h4>
-                                            <p>${groupDeck.deck.des}</p>
+                                    <div class="deck-item approved" style="display: flex; flex-direction: column;">
+                                        <a href="/client/deck/${groupDeck.deck.id}"
+                                            style="color: inherit; text-decoration: none; display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="deck-content">
+                                                <h4>${groupDeck.deck.title}</h4>
+                                                <p>${groupDeck.deck.des}</p>
+                                            </div>
                                         </a>
+                                        <c:if test="${isLeader}">
+                                            <div class="deck-footer">
+                                                <form action="/groups/${group.id}/hide-deck" method="post" style="margin: 0; flex: 1; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                    <input type="hidden" name="groupDeckId" value="${groupDeck.id}">
+                                                    <button type="submit" class="btn-reject" style="width: 100%; justify-content: center;" onclick="return confirm('Bạn có chắc chắn muốn ẩn deck này khỏi nhóm?');">
+                                                        <i class="fas fa-eye-slash"></i> Ẩn
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </c:forEach>
                                 <c:if test="${empty approvedDecks}">
