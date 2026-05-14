@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.flc.domain.StudyGroup;
 import com.example.flc.domain.User;
+import com.example.flc.domain.GroupDeck;
 import com.example.flc.repository.UserRepository;
 import com.example.flc.service.GroupService;
 
@@ -58,7 +59,11 @@ public class GroupController {
 
         model.addAttribute("group", group);
         model.addAttribute("members", groupService.getMembers(groupId));
-        model.addAttribute("approvedDecks", groupService.getStatusDecks(groupId, "APPROVED"));
+        Pageable limit6 = PageRequest.of(0, 6);
+
+        Page<GroupDeck> approvedPage = groupService.getStatusDecksPaginated(groupId, "APPROVED", limit6);
+        model.addAttribute("approvedDecks", approvedPage.getContent());
+        model.addAttribute("hasMoreApprovedDecks", approvedPage.hasNext());
 
         // SỬA DÒNG NÀY: Đổi "isLead" thành "isLeader"
         model.addAttribute("isLeader", isLead);
@@ -66,16 +71,55 @@ public class GroupController {
         model.addAttribute("currentUserId", currentUser.getId());
 
         if (isLead) {
-            model.addAttribute("pendingDecks", groupService.getStatusDecks(groupId, "PENDING"));
-            model.addAttribute("rejectedDecks", groupService.getStatusDecks(groupId, "REJECTED"));
+            Page<GroupDeck> pendingPage = groupService.getStatusDecksPaginated(groupId, "PENDING", limit6);
+            model.addAttribute("pendingDecks", pendingPage.getContent());
+            model.addAttribute("hasMorePendingDecks", pendingPage.hasNext());
+
+            Page<GroupDeck> rejectedPage = groupService.getStatusDecksPaginated(groupId, "REJECTED", limit6);
+            model.addAttribute("rejectedDecks", rejectedPage.getContent());
+            model.addAttribute("hasMoreRejectedDecks", rejectedPage.hasNext());
         } else {
-            model.addAttribute("rejectedMemberDecks",
-                    groupService.getStatusMemberDecks(groupId, "REJECTED", currentUser.getId()));
-            model.addAttribute("pendingMemberDecks",
-                    groupService.getStatusMemberDecks(groupId, "PENDING", currentUser.getId()));
+            Page<GroupDeck> rejectedMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "REJECTED", currentUser.getId(), limit6);
+            model.addAttribute("rejectedMemberDecks", rejectedMemberPage.getContent());
+            model.addAttribute("hasMoreRejectedMemberDecks", rejectedMemberPage.hasNext());
+
+            Page<GroupDeck> pendingMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "PENDING", currentUser.getId(), limit6);
+            model.addAttribute("pendingMemberDecks", pendingMemberPage.getContent());
+            model.addAttribute("hasMorePendingMemberDecks", pendingMemberPage.hasNext());
         }
 
         return "client/group/detail";
+    }
+
+    @GetMapping("/{groupId}/decks")
+    public String viewDecksByType(@PathVariable Long groupId, @RequestParam String status, 
+            @RequestParam(value = "page", defaultValue = "1") int page, Model model, Principal principal) {
+        User currentUser = userRepository.findByEmail(principal.getName());
+        StudyGroup group = groupService.getGroupById(groupId);
+        boolean isLead = groupService.checkIsLeader(groupId, currentUser);
+        
+        Pageable pageable = PageRequest.of(page - 1, 12); // 12 items per page for "View All"
+        Page<GroupDeck> deckPage;
+        
+        if (isLead) {
+            deckPage = groupService.getStatusDecksPaginated(groupId, status, pageable);
+        } else {
+            if ("APPROVED".equals(status)) {
+                deckPage = groupService.getStatusDecksPaginated(groupId, status, pageable);
+            } else {
+                deckPage = groupService.getStatusMemberDecksPaginated(groupId, status, currentUser.getId(), pageable);
+            }
+        }
+        
+        model.addAttribute("group", group);
+        model.addAttribute("listGroupDeck", deckPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", deckPage.getTotalPages());
+        model.addAttribute("status", status);
+        model.addAttribute("isLeader", isLead);
+        model.addAttribute("currentUserId", currentUser.getId());
+        
+        return "client/group/decks-view-all";
     }
 
     @PostMapping("/{groupId}/add-member")

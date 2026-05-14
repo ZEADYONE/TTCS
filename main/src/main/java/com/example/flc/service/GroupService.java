@@ -227,8 +227,16 @@ public class GroupService {
         return groupDeckRepo.findByGroupDeckStatus(groupId, status);
     }
 
+    public Page<GroupDeck> getStatusDecksPaginated(Long groupId, String status, Pageable pageable) {
+        return groupDeckRepo.findByGroupDeckStatusPaginated(groupId, status, pageable);
+    }
+
     public List<GroupDeck> getStatusMemberDecks(Long groupId, String status, Long userId) {
         return groupDeckRepo.findByGroupMemberDeckStatus(groupId, status, userId);
+    }
+
+    public Page<GroupDeck> getStatusMemberDecksPaginated(Long groupId, String status, Long userId, Pageable pageable) {
+        return groupDeckRepo.findByGroupMemberDeckStatusPaginated(groupId, status, userId, pageable);
     }
 
     public Page<AdminGroupDTO> getAdminGroups(String keyword, Pageable pageable) {

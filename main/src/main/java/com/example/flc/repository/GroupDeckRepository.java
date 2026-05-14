@@ -2,6 +2,8 @@ package com.example.flc.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,8 +36,30 @@ public interface GroupDeckRepository extends JpaRepository<GroupDeck, Long> {
                         "AND gd.status = :status " +
                         "AND deck.user.id = :userId " +
                         "AND deck.status = true")
-
         List<GroupDeck> findByGroupMemberDeckStatus(@Param("groupId") Long groupId,
                         @Param("status") String status,
                         @Param("userId") Long userId);
+
+        @Query("""
+                        SELECT gd FROM GroupDeck gd
+                        JOIN gd.deck deck
+                        WHERE gd.group.id = :groupId
+                        AND gd.status = :status
+                        AND deck.status = true
+                                """)
+        Page<GroupDeck> findByGroupDeckStatusPaginated(
+                        @Param("groupId") Long groupId,
+                        @Param("status") String status,
+                        Pageable pageable);
+
+        @Query("SELECT gd FROM GroupDeck gd JOIN gd.deck deck " +
+                        "WHERE gd.group.id = :groupId " +
+                        "AND gd.status = :status " +
+                        "AND deck.user.id = :userId " +
+                        "AND deck.status = true")
+        Page<GroupDeck> findByGroupMemberDeckStatusPaginated(
+                        @Param("groupId") Long groupId,
+                        @Param("status") String status,
+                        @Param("userId") Long userId,
+                        Pageable pageable);
 }

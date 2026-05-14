@@ -136,6 +136,13 @@
                                     </p>
                                 </c:if>
                             </div>
+                            <c:if test="${hasMoreApprovedDecks}">
+                                <div style="text-align: center; margin-top: 15px;">
+                                    <a href="/groups/${group.id}/decks?status=APPROVED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                        Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                    </a>
+                                </div>
+                            </c:if>
                         </section>
 
                         <c:if test="${not empty pendingDecks}">
@@ -178,6 +185,13 @@
                                         </div>
                                     </c:forEach>
                                 </div>
+                                <c:if test="${hasMorePendingDecks}">
+                                    <div style="text-align: center; margin-top: 15px;">
+                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                            Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                        </a>
+                                    </div>
+                                </c:if>
                             </section>
                         </c:if>
 
@@ -221,6 +235,13 @@
                                         </div>
                                     </c:forEach>
                                 </div>
+                                <c:if test="${hasMorePendingMemberDecks}">
+                                    <div style="text-align: center; margin-top: 15px;">
+                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                            Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                        </a>
+                                    </div>
+                                </c:if>
                             </section>
                         </c:if>
 
@@ -245,6 +266,13 @@
                                                 </div>
                                             </c:forEach>
                                         </div>
+                                        <c:if test="${hasMoreRejectedMemberDecks}">
+                                            <div style="text-align: center; margin-top: 15px;">
+                                                <a href="/groups/${group.id}/decks?status=REJECTED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                                    Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                                </a>
+                                            </div>
+                                        </c:if>
                                     </section>
                                 </c:if>
                             </c:when>
@@ -269,6 +297,13 @@
                                                 </div>
                                             </c:forEach>
                                         </div>
+                                        <c:if test="${hasMoreRejectedDecks}">
+                                            <div style="text-align: center; margin-top: 15px;">
+                                                <a href="/groups/${group.id}/decks?status=REJECTED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                                    Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                                </a>
+                                            </div>
+                                        </c:if>
                                     </section>
                                 </c:if>
                             </c:when>
