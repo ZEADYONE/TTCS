@@ -121,8 +121,8 @@
                                                     <input type="hidden" name="groupDeckId" value="${groupDeck.id}">
                                                     <button type="submit" class="btn-reject"
                                                         style="width: 100%; justify-content: center;"
-                                                        onclick="return confirm('Bạn có chắc chắn muốn ẩn deck này khỏi nhóm?');">
-                                                        <i class="fas fa-eye-slash"></i> Ẩn
+                                                        onclick="return confirm('Bạn có chắc chắn muốn Xóa deck này khỏi nhóm?');">
+                                                        <i class="fas fa-eye-slash"></i> Xóa
                                                     </button>
                                                 </form>
                                             </div>
@@ -138,8 +138,10 @@
                             </div>
                             <c:if test="${hasMoreApprovedDecks}">
                                 <div style="text-align: center; margin-top: 15px;">
-                                    <a href="/groups/${group.id}/decks?status=APPROVED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
-                                        Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                    <a href="/groups/${group.id}/decks?status=APPROVED" class="btn btn-outline"
+                                        style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                        Xem tất cả <i class="fas fa-chevron-right"
+                                            style="font-size: 0.8em; margin-left: 5px;"></i>
                                     </a>
                                 </div>
                             </c:if>
@@ -180,6 +182,7 @@
                                                             <i class="fas fa-times"></i> Từ chối
                                                         </button>
                                                     </form>
+
                                                 </div>
                                             </c:if>
                                         </div>
@@ -187,8 +190,10 @@
                                 </div>
                                 <c:if test="${hasMorePendingDecks}">
                                     <div style="text-align: center; margin-top: 15px;">
-                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
-                                            Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline"
+                                            style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                            Xem tất cả <i class="fas fa-chevron-right"
+                                                style="font-size: 0.8em; margin-left: 5px;"></i>
                                         </a>
                                     </div>
                                 </c:if>
@@ -209,36 +214,51 @@
                                                     </p>
                                                 </div>
                                             </a>
-                                            <c:if test="${isLeader}">
-                                                <div class="deck-footer">
-                                                    <form action="/groups/${group.id}/approve-deck" method="post"
-                                                        style="margin: 0; flex: 1; display: flex;">
-                                                        <input type="hidden" name="${_csrf.parameterName}"
-                                                            value="${_csrf.token}" />
-                                                        <input type="hidden" name="groupDeckId" value="${pending.id}">
-                                                        <button type="submit" class="btn-approve">
-                                                            <i class="fas fa-check"></i> Duyệt
-                                                        </button>
-                                                    </form>
+                                            <div class="deck-footer">
+                                                <form action="/groups/${group.id}/hide-deck" method="post"
+                                                    style="margin: 0; flex: 1; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <input type="hidden" name="groupDeckId" value="${pending.id}">
+                                                    <button type="submit" class="btn-reject"
+                                                        style="width: 100%; justify-content: center;"
+                                                        onclick="return confirm('Bạn có chắc chắn muốn Xóa deck này khỏi nhóm?');">
+                                                        <i class="fas fa-eye-slash"></i> Xóa
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <!-- <c:if test="${isLeader}">
+                                            <div class="deck-footer">
+                                                <form action="/groups/${group.id}/approve-deck" method="post"
+                                                    style="margin: 0; flex: 1; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <input type="hidden" name="groupDeckId" value="${pending.id}">
+                                                    <button type="submit" class="btn-approve">
+                                                        <i class="fas fa-check"></i> Duyệt
+                                                    </button>
+                                                </form>
 
-                                                    <form action="/groups/${group.id}/reject-deck" method="post"
-                                                        style="margin: 0; flex: 1; display: flex;">
-                                                        <input type="hidden" name="${_csrf.parameterName}"
-                                                            value="${_csrf.token}" />
-                                                        <input type="hidden" name="groupDeckId" value="${pending.id}">
-                                                        <button type="submit" class="btn-reject">
-                                                            <i class="fas fa-times"></i> Từ chối
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </c:if>
+                                                <form action="/groups/${group.id}/reject-deck" method="post"
+                                                    style="margin: 0; flex: 1; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <input type="hidden" name="groupDeckId" value="${pending.id}">
+                                                    <button type="submit" class="btn-reject">
+                                                        <i class="fas fa-times"></i> Từ chối
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </c:if> -->
                                         </div>
                                     </c:forEach>
                                 </div>
                                 <c:if test="${hasMorePendingMemberDecks}">
                                     <div style="text-align: center; margin-top: 15px;">
-                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
-                                            Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                        <a href="/groups/${group.id}/decks?status=PENDING" class="btn btn-outline"
+                                            style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                            Xem tất cả <i class="fas fa-chevron-right"
+                                                style="font-size: 0.8em; margin-left: 5px;"></i>
                                         </a>
                                     </div>
                                 </c:if>
@@ -263,13 +283,30 @@
                                                                 bài viết này.</p>
                                                         </div>
                                                     </a>
+                                                    <div class="deck-footer">
+                                                        <form action="/groups/${group.id}/hide-deck" method="post"
+                                                            style="margin: 0; flex: 1; display: flex;">
+                                                            <input type="hidden" name="${_csrf.parameterName}"
+                                                                value="${_csrf.token}" />
+                                                            <input type="hidden" name="groupDeckId"
+                                                                value="${rejected.id}">
+                                                            <button type="submit" class="btn-reject"
+                                                                style="width: 100%; justify-content: center;"
+                                                                onclick="return confirm('Bạn có chắc chắn muốn Xóa deck này khỏi nhóm?');">
+                                                                <i class="fas fa-eye-slash"></i> Xóa
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </c:forEach>
                                         </div>
                                         <c:if test="${hasMoreRejectedMemberDecks}">
                                             <div style="text-align: center; margin-top: 15px;">
-                                                <a href="/groups/${group.id}/decks?status=REJECTED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
-                                                    Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                                <a href="/groups/${group.id}/decks?status=REJECTED"
+                                                    class="btn btn-outline"
+                                                    style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                                    Xem tất cả <i class="fas fa-chevron-right"
+                                                        style="font-size: 0.8em; margin-left: 5px;"></i>
                                                 </a>
                                             </div>
                                         </c:if>
@@ -299,8 +336,11 @@
                                         </div>
                                         <c:if test="${hasMoreRejectedDecks}">
                                             <div style="text-align: center; margin-top: 15px;">
-                                                <a href="/groups/${group.id}/decks?status=REJECTED" class="btn btn-outline" style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
-                                                    Xem tất cả <i class="fas fa-chevron-right" style="font-size: 0.8em; margin-left: 5px;"></i>
+                                                <a href="/groups/${group.id}/decks?status=REJECTED"
+                                                    class="btn btn-outline"
+                                                    style="border-radius: 20px; padding: 5px 20px; font-size: 0.9em; text-decoration: none; color: inherit;">
+                                                    Xem tất cả <i class="fas fa-chevron-right"
+                                                        style="font-size: 0.8em; margin-left: 5px;"></i>
                                                 </a>
                                             </div>
                                         </c:if>
@@ -343,7 +383,8 @@
                                             </c:if>
 
                                             <c:if test="${!isLeader && member.user.id == currentUserId}">
-                                                <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
+                                                <form action="/groups/${group.id}/leave" method="post"
+                                                    style="margin: 0;"
                                                     onsubmit="return confirm('Bạn có chắc chắn muốn rời khỏi nhóm này?');">
                                                     <input type="hidden" name="${_csrf.parameterName}"
                                                         value="${_csrf.token}" />

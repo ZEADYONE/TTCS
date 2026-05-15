@@ -79,11 +79,13 @@ public class GroupController {
             model.addAttribute("rejectedDecks", rejectedPage.getContent());
             model.addAttribute("hasMoreRejectedDecks", rejectedPage.hasNext());
         } else {
-            Page<GroupDeck> rejectedMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "REJECTED", currentUser.getId(), limit6);
+            Page<GroupDeck> rejectedMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "REJECTED",
+                    currentUser.getId(), limit6);
             model.addAttribute("rejectedMemberDecks", rejectedMemberPage.getContent());
             model.addAttribute("hasMoreRejectedMemberDecks", rejectedMemberPage.hasNext());
 
-            Page<GroupDeck> pendingMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "PENDING", currentUser.getId(), limit6);
+            Page<GroupDeck> pendingMemberPage = groupService.getStatusMemberDecksPaginated(groupId, "PENDING",
+                    currentUser.getId(), limit6);
             model.addAttribute("pendingMemberDecks", pendingMemberPage.getContent());
             model.addAttribute("hasMorePendingMemberDecks", pendingMemberPage.hasNext());
         }
@@ -92,15 +94,15 @@ public class GroupController {
     }
 
     @GetMapping("/{groupId}/decks")
-    public String viewDecksByType(@PathVariable Long groupId, @RequestParam String status, 
+    public String viewDecksByType(@PathVariable Long groupId, @RequestParam String status,
             @RequestParam(value = "page", defaultValue = "1") int page, Model model, Principal principal) {
         User currentUser = userRepository.findByEmail(principal.getName());
         StudyGroup group = groupService.getGroupById(groupId);
         boolean isLead = groupService.checkIsLeader(groupId, currentUser);
-        
+
         Pageable pageable = PageRequest.of(page - 1, 12); // 12 items per page for "View All"
         Page<GroupDeck> deckPage;
-        
+
         if (isLead) {
             deckPage = groupService.getStatusDecksPaginated(groupId, status, pageable);
         } else {
@@ -110,7 +112,7 @@ public class GroupController {
                 deckPage = groupService.getStatusMemberDecksPaginated(groupId, status, currentUser.getId(), pageable);
             }
         }
-        
+
         model.addAttribute("group", group);
         model.addAttribute("listGroupDeck", deckPage.getContent());
         model.addAttribute("currentPage", page);
@@ -118,7 +120,7 @@ public class GroupController {
         model.addAttribute("status", status);
         model.addAttribute("isLeader", isLead);
         model.addAttribute("currentUserId", currentUser.getId());
-        
+
         return "client/group/decks-view-all";
     }
 
@@ -134,11 +136,23 @@ public class GroupController {
     }
 
     @PostMapping("/{groupId}/kick")
-    public String kickOrLeave(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal,
+    public String kickMember(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal,
             Model model) {
         try {
             groupService.removeMember(groupId, targetUserId, userRepository.findByEmail(principal.getName()));
             return "redirect:/groups/" + groupId;
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return viewGroup(groupId, model, principal);
+        }
+    }
+
+    @PostMapping("/{groupId}/leave")
+    public String leaveGroup(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal,
+            Model model) {
+        try {
+            groupService.removeMember(groupId, targetUserId, userRepository.findByEmail(principal.getName()));
+            return "redirect:/groups";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return viewGroup(groupId, model, principal);
