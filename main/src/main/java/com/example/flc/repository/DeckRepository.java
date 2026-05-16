@@ -63,12 +63,11 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
                         "    )" +
                         ") " +
                         "AND (" +
-                        "    d.user_id = :userId " + // Lấy bộ của chính mình
-                        "    OR (d.scope = 'Public' AND EXISTS (" + // Hoặc bộ Public mà mình đã học
-                        "        SELECT 1 FROM Progress p2 " +
-                        "        JOIN Card c2 ON p2.card_id = c2.id " +
-                        "        WHERE c2.deck_id = d.id AND p2.user_id = :userId" +
-                        "    ))" +
+                        "    d.user_id = :userId " +
+                        "    OR EXISTS (" +
+                        "        SELECT 1 FROM user_deck_library udl " +
+                        "        WHERE udl.deck_id = d.id AND udl.user_id = :userId" +
+                        "    )" +
                         ") " +
                         "GROUP BY d.id, d.title, d.image, d.des, d.scope, u.user_name, d.user_id, d.is_featured", countQuery = "SELECT COUNT(DISTINCT d.id) FROM Deck d "
                                         +
@@ -82,9 +81,9 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
                                         "    ('Admin' IN :filters AND r.name = 'ADMIN') OR " +
                                         "    ('Other' IN :filters AND d.user_id != :userId AND r.name != 'ADMIN') " +
                                         ")) " +
-                                        "AND (d.user_id = :userId OR (d.scope = 'Public' AND EXISTS (" +
-                                        "    SELECT 1 FROM Progress p2 JOIN Card c2 ON p2.card_id = c2.id " +
-                                        "    WHERE c2.deck_id = d.id AND p2.user_id = :userId)))", nativeQuery = true)
+                                        "AND (d.user_id = :userId OR EXISTS (" +
+                                        "    SELECT 1 FROM user_deck_library udl " +
+                                        "    WHERE udl.deck_id = d.id AND udl.user_id = :userId)))", nativeQuery = true)
         Page<Object[]> findAdvancedDecks(@Param("keyword") String keyword,
                         @Param("filters") List<String> filters,
                         @Param("userId") Long userId,

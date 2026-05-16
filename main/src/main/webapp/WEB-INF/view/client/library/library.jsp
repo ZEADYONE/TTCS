@@ -221,9 +221,8 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
-                                            <c:if test="${currentUser == deck.userId}">
-                                                <div class="card-actions"
-                                                    style="display: flex; align-items: center; gap: 15px;">
+                                            <div class="card-actions" style="display: flex; align-items: center; gap: 15px;">
+                                                <c:if test="${currentUser == deck.userId}">
                                                     <i class="fas fa-share-alt share-deck-btn"
                                                         style="cursor: pointer; color: var(--primary-color);"
                                                         data-deck-id="${deck.id}" title="Share to Group"
@@ -232,18 +231,27 @@
                                                     <i class="fas fa-wrench fix_deck" style="cursor: pointer;"
                                                         data-id="${deck.id}" data-title="${deck.title}"
                                                         data-des="${deck.des}" data-scope="${deck.scope}"></i>
+                                                </c:if>
 
-                                                    <form action="/client/deck/delete/${deck.id}" method="post"
-                                                        style="margin: 0; display: flex;">
-                                                        <input type="hidden" name="${_csrf.parameterName}"
-                                                            value="${_csrf.token}" />
-                                                        <button type="submit"
-                                                            style="background: none; border: none; padding: 0; cursor: pointer; color: inherit;">
-                                                            <i class="fas fa-trash-alt trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </c:if>
+                                                <form action="/client/deck/delete/${deck.id}" method="post"
+                                                    style="margin: 0; display: flex;">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <button type="submit"
+                                                        style="background: none; border: none; padding: 0; cursor: pointer; color: inherit;"
+                                                        title="${currentUser == deck.userId ? 'Delete Deck' : 'Remove from Library'}"
+                                                        onclick="return confirm('${currentUser == deck.userId ? 'Bạn có chắc chắn muốn xóa bộ bài này không?' : 'Bạn có muốn ẩn bộ bài này khỏi thư viện cá nhân?'}')">
+                                                        <c:choose>
+                                                            <c:when test="${currentUser == deck.userId}">
+                                                                <i class="fas fa-trash-alt trash"></i>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <i class="fas fa-times-circle" style="color: #dc3545; font-size: 1.2rem;"></i>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </button>
+                                                </form>
+                                            </div>
 
                                         </div>
                                     </div>

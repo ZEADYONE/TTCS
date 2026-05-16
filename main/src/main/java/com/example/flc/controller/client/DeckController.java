@@ -29,6 +29,7 @@ import com.example.flc.domain.User;
 import com.example.flc.service.CardService;
 import com.example.flc.service.DeckService;
 import com.example.flc.service.UploadService;
+import com.example.flc.service.UserDeckLibraryService;
 
 @Controller
 public class DeckController {
@@ -38,14 +39,16 @@ public class DeckController {
     private final UploadService uploadService;
     private final UserRepository userRepository;
     private final CardService cardService;
+    private final UserDeckLibraryService userDeckLibraryService;
 
     public DeckController(UploadService uploadService, DeckService deckService, UserRepository userRepository,
-            CardService cardService, DeckRepository deckRepository) {
+            CardService cardService, DeckRepository deckRepository, UserDeckLibraryService userDeckLibraryService) {
         this.uploadService = uploadService;
         this.deckService = deckService;
         this.userRepository = userRepository;
         this.cardService = cardService;
         this.deckRepository = deckRepository;
+        this.userDeckLibraryService = userDeckLibraryService;
     }
 
     // CREATE
@@ -79,6 +82,8 @@ public class DeckController {
         String username = principal.getName();
         User user = userRepository.findByEmail(username);
         Long currentUserId = user.getId();
+
+        // this.userDeckLibraryService.addDeckToLibraryIfNotExists(user, deck);
 
         Pageable pageable = PageRequest.of(page - 1, 4);
         Page<Card> pageCard = this.cardService.getAllCardByDeckFilter(keyword, deck, pageable);
@@ -120,9 +125,16 @@ public class DeckController {
 
     // DELETE
     @PostMapping("/client/deck/delete/{id}")
-    public String deleteDeck(@PathVariable("id") long id) {
+    public String deleteDeck(@PathVariable("id") long id, Principal principal) {
         Deck deck = this.deckService.getDeckById(id);
-        deck.setStatus(false);
+        User user = userRepository.findByEmail(principal.getName());
+
+        if (deck.getUser().getId() == user.getId()) {
+            deck.setStatus(false);
+            this.deckService.handelSaveDeck(deck);
+        } else {
+            this.userDeckLibraryService.removeDeckFromLibrary(user.getId(), deck.getId());
+        }
         return "redirect:/client/library";
     }
 
