@@ -371,6 +371,15 @@
 
                                         <div class="member-actions">
                                             <c:if test="${isLeader && member.groupRole != 'LEADER'}">
+                                                <form action="/groups/${group.id}/transfer-leadership" method="post" style="margin: 0; margin-right: 5px;"
+                                                    onsubmit="return confirm('Bạn có chắc chắn muốn chuyển quyền trưởng nhóm cho thành viên này không?');">
+                                                    <input type="hidden" name="${_csrf.parameterName}"
+                                                        value="${_csrf.token}" />
+                                                    <input type="hidden" name="targetUserId" value="${member.user.id}">
+                                                    <button type="submit" class="btn-icon" title="Chuyển quyền Leader" style="color: #f59e0b; background: #fef3c7; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer;">
+                                                        <i class="fas fa-crown"></i>
+                                                    </button>
+                                                </form>
                                                 <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
                                                     onsubmit="return confirm('Mời thành viên này ra khỏi nhóm?');">
                                                     <input type="hidden" name="${_csrf.parameterName}"

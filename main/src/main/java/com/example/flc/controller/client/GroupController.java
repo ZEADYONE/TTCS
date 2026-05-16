@@ -159,6 +159,18 @@ public class GroupController {
         }
     }
 
+    @PostMapping("/{groupId}/transfer-leadership")
+    public String transferLeadership(@PathVariable Long groupId, @RequestParam Long targetUserId, Principal principal,
+            Model model) {
+        try {
+            groupService.transferLeadership(groupId, targetUserId, userRepository.findByEmail(principal.getName()));
+            return "redirect:/groups/" + groupId;
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return viewGroup(groupId, model, principal);
+        }
+    }
+
     // --- GIẢI TÁN NHÓM ---
     @PostMapping("/{groupId}/disband")
     public String disbandGroup(@PathVariable Long groupId, Principal principal, Model model) {

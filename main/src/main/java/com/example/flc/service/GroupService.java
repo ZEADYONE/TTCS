@@ -130,6 +130,40 @@ public class GroupService {
         }
     }
 
+    // --- CHUYỂN GIAO QUYỀN TRƯỞNG NHÓM ---
+    @Transactional
+    public void transferLeadership(Long groupId, Long targetUserId, User currentUser) throws Exception {
+        StudyGroup group = groupRepo.findById(groupId).orElseThrow(() -> new Exception("Không tìm thấy nhóm."));
+
+        // 1. Kiểm tra quyền của currentUser
+        if (!checkIsLeader(groupId, currentUser)) {
+            throw new Exception("Chỉ Trưởng nhóm mới có quyền chuyển giao.");
+        }
+
+        Long currentUserId = currentUser.getId();
+        if (currentUserId.equals(targetUserId)) {
+            throw new Exception("Bạn không thể chuyển quyền cho chính mình.");
+        }
+
+        // 2. Tìm GroupMember của current leader
+        GroupMember currentLeaderMember = memberRepo.findByGroupAndUser(group, currentUser)
+                .orElseThrow(() -> new Exception("Lỗi: Không tìm thấy dữ liệu thành viên của bạn."));
+
+        // 3. Tìm GroupMember của target user
+        User targetUser = userRepo.findById(targetUserId)
+                .orElseThrow(() -> new Exception("Không tìm thấy người dùng đích."));
+        GroupMember targetMember = memberRepo.findByGroupAndUser(group, targetUser)
+                .orElseThrow(() -> new Exception("Thành viên được chọn không thuộc nhóm này."));
+
+        // 4. Thực hiện chuyển quyền
+        currentLeaderMember.setGroupRole("MEMBER");
+        targetMember.setGroupRole("LEADER");
+
+        // 5. Lưu xuống DB
+        memberRepo.save(currentLeaderMember);
+        memberRepo.save(targetMember);
+    }
+
     // --- TÍNH NĂNG MỚI: GIẢI TÁN NHÓM ---
     @Transactional
     public void disbandGroup(Long groupId, User currentUser) throws Exception {
