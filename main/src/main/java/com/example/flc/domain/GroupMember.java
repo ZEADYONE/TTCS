@@ -27,7 +27,6 @@ public class GroupMember {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // BỔ SUNG TRƯỜNG NÀY ĐỂ PHÂN QUYỀN LEADER/MEMBER
     @Column(name = "group_role", nullable = false, length = 20)
     private String groupRole = "MEMBER";
 

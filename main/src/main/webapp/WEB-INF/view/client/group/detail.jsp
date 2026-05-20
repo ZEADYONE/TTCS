@@ -370,25 +370,44 @@
                                         </div>
 
                                         <div class="member-actions">
+
                                             <c:if test="${isLeader && member.groupRole != 'LEADER'}">
-                                                <form action="/groups/${group.id}/transfer-leadership" method="post" style="margin: 0; margin-right: 5px;"
-                                                    onsubmit="return confirm('Bạn có chắc chắn muốn chuyển quyền trưởng nhóm cho thành viên này không?');">
-                                                    <input type="hidden" name="${_csrf.parameterName}"
-                                                        value="${_csrf.token}" />
-                                                    <input type="hidden" name="targetUserId" value="${member.user.id}">
-                                                    <button type="submit" class="btn-icon" title="Chuyển quyền Leader" style="color: #f59e0b; background: #fef3c7; border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer;">
-                                                        <i class="fas fa-crown"></i>
+                                                <div class="member-menu-wrapper">
+                                                    <button type="button" class="btn-icon member-menu-btn"
+                                                        onclick="toggleMemberMenu(event, 'member-menu-${member.user.id}')"
+                                                        title="Tùy chọn thành viên">
+                                                        <i class="fas fa-ellipsis-v"></i>
                                                     </button>
-                                                </form>
-                                                <form action="/groups/${group.id}/kick" method="post" style="margin: 0;"
-                                                    onsubmit="return confirm('Mời thành viên này ra khỏi nhóm?');">
-                                                    <input type="hidden" name="${_csrf.parameterName}"
-                                                        value="${_csrf.token}" />
-                                                    <input type="hidden" name="targetUserId" value="${member.user.id}">
-                                                    <button type="submit" class="btn-icon kick" title="Mời khỏi nhóm">
-                                                        <i class="fas fa-user-times"></i>
-                                                    </button>
-                                                </form>
+
+                                                    <div id="member-menu-${member.user.id}" class="member-action-popup">
+                                                        <form action="/groups/${group.id}/transfer-leadership"
+                                                            method="post"
+                                                            onsubmit="return confirm('Bạn có chắc chắn muốn chuyển quyền trưởng nhóm cho thành viên này không? Sau khi chuyển, bạn sẽ trở thành thành viên thường.');">
+                                                            <input type="hidden" name="${_csrf.parameterName}"
+                                                                value="${_csrf.token}" />
+                                                            <input type="hidden" name="targetUserId"
+                                                                value="${member.user.id}" />
+
+                                                            <button type="submit" class="popup-action transfer">
+                                                                <i class="fas fa-crown"></i>
+                                                                <span>Chuyển nhóm trưởng</span>
+                                                            </button>
+                                                        </form>
+
+                                                        <form action="/groups/${group.id}/kick" method="post"
+                                                            onsubmit="return confirm('Bạn có chắc chắn muốn đuổi thành viên này khỏi nhóm?');">
+                                                            <input type="hidden" name="${_csrf.parameterName}"
+                                                                value="${_csrf.token}" />
+                                                            <input type="hidden" name="targetUserId"
+                                                                value="${member.user.id}" />
+
+                                                            <button type="submit" class="popup-action kick">
+                                                                <i class="fas fa-user-times"></i>
+                                                                <span>Đuổi khỏi nhóm</span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </c:if>
 
                                             <c:if test="${!isLeader && member.user.id == currentUserId}">
@@ -403,6 +422,7 @@
                                                     </button>
                                                 </form>
                                             </c:if>
+
                                         </div>
                                     </li>
                                 </c:forEach>
@@ -443,6 +463,41 @@
                 window.onclick = function (event) {
                     if (event.target.classList.contains('modal-overlay')) {
                         event.target.style.display = "none";
+                    }
+                }
+
+                function openModal(modalId) {
+                    document.getElementById(modalId).style.display = 'flex';
+                }
+
+                function closeModal(modalId) {
+                    document.getElementById(modalId).style.display = 'none';
+                }
+
+                function toggleMemberMenu(event, menuId) {
+                    event.stopPropagation();
+
+                    document.querySelectorAll('.member-action-popup').forEach(function (menu) {
+                        if (menu.id !== menuId) {
+                            menu.classList.remove('show');
+                        }
+                    });
+
+                    const menu = document.getElementById(menuId);
+                    if (menu) {
+                        menu.classList.toggle('show');
+                    }
+                }
+
+                window.onclick = function (event) {
+                    if (event.target.classList.contains('modal-overlay')) {
+                        event.target.style.display = "none";
+                    }
+
+                    if (!event.target.closest('.member-menu-wrapper')) {
+                        document.querySelectorAll('.member-action-popup').forEach(function (menu) {
+                            menu.classList.remove('show');
+                        });
                     }
                 }
             </script>

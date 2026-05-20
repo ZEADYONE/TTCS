@@ -136,18 +136,22 @@ public class GroupService {
         StudyGroup group = groupRepo.findById(groupId).orElseThrow(() -> new Exception("Không tìm thấy nhóm."));
 
         // 1. Kiểm tra quyền của currentUser
-        if (!checkIsLeader(groupId, currentUser)) {
-            throw new Exception("Chỉ Trưởng nhóm mới có quyền chuyển giao.");
-        }
+        // if (!checkIsLeader(groupId, currentUser)) {
+        // throw new Exception("Chỉ Trưởng nhóm mới có quyền chuyển giao.");
+        // }
 
-        Long currentUserId = currentUser.getId();
-        if (currentUserId.equals(targetUserId)) {
-            throw new Exception("Bạn không thể chuyển quyền cho chính mình.");
-        }
+        // Long currentUserId = currentUser.getId();
+        // if (currentUserId.equals(targetUserId)) {
+        // throw new Exception("Bạn không thể chuyển quyền cho chính mình.");
+        // }
 
         // 2. Tìm GroupMember của current leader
-        GroupMember currentLeaderMember = memberRepo.findByGroupAndUser(group, currentUser)
-                .orElseThrow(() -> new Exception("Lỗi: Không tìm thấy dữ liệu thành viên của bạn."));
+        // GroupMember currentLeaderMember = memberRepo.findByGroupAndUser(group,
+        // currentUser)
+        // .orElseThrow(() -> new Exception("Lỗi: Không tìm thấy dữ liệu thành viên của
+        // bạn."));
+
+        GroupMember currentLeaderMember = memberRepo.findUserByLeaderGroupId(group.getId());
 
         // 3. Tìm GroupMember của target user
         User targetUser = userRepo.findById(targetUserId)

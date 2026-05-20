@@ -1,6 +1,7 @@
 package com.example.flc.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +27,13 @@ public interface GroupMemberRepository extends JpaRepository<GroupMember, Intege
 
     Page<StudyGroup> findGroupsByUser(@Param("user") User user, @Param("keyword") String keyword, Pageable pageable);
 
-    java.util.Optional<GroupMember> findByGroupAndUser(StudyGroup group, User user);
+    Optional<GroupMember> findByGroupAndUser(StudyGroup group, User user);
 
     @Query("SELECT gm.group FROM GroupMember gm WHERE gm.user = :user")
     List<StudyGroup> findGroupsByUserShare(User user);
+
+    @Query("SELECT gm FROM GroupMember gm WHERE gm.group.id = :groupId AND gm.groupRole = 'LEADER'")
+    GroupMember findUserByLeaderGroupId(@Param("groupId") Integer groupId);
 
     void deleteByGroupId(Integer groupId);
 }
