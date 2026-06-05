@@ -23,7 +23,7 @@
                 </div>
                 <div class="nav-links">
                     <a href="/">HOME</a>
-                    <a href=" /client/library">FLASHCARD</a>
+                    <a href="/client/library">FLASHCARD</a>
                 </div>
                 <div class="container-info" id="userDropdownTrigger">
                     <i class="fa-regular fa-user"></i>
@@ -113,18 +113,15 @@
 
                                     <div class="card-bg" style="background-image: url('/images/client/${card.image}')">
                                     </div>
-
-                                    <div class="card-content">
-                                        <h3>${card.word}</h3>
-                                        <p>${card.mean}</p>
-                                    </div>
-
                                 </a>
+                                <div class="card-content">
+                                    <h3>${card.word}</h3>
+                                    <p>${card.mean}</p>
+                                </div>
 
-                                <!-- AUDIO -->
-                                <!-- <div class="audio-icon" onclick="playAudio('${card.word}')">
-                                    <i class="fa-solid fa-volume-high"></i>
-                                </div> -->
+
+
+
 
                                 <div class="audio-icon" data-word="${card.word}" style="cursor: pointer;">
                                     <i class="fa-solid fa-volume-high"></i>
@@ -140,9 +137,13 @@
 
                                         <form action="/client/card/delete/${card.id}" method="post">
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                            <button type="submit" style=" background: none;border: none; padding: 0;"><i
-                                                    class="fas fa-trash-alt trash"></i></button>
+
+                                            <button type="submit"
+                                                style="background: none; border: none; padding: 0; cursor: pointer;">
+                                                <i class="fas fa-trash-alt trash"></i>
+                                            </button>
                                         </form>
+
                                     </div>
                                 </c:if>
 

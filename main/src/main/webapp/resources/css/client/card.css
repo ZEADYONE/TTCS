@@ -225,3 +225,48 @@ textarea {
     width: 16px;
     font-size: 14px;
 }
+
+/* AI Generation Button */
+.word-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.word-input-group input {
+    flex: 1;
+}
+
+.btn-gen-ai {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 20px;
+    background: linear-gradient(135deg, var(--btn-purple), #a88eff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(125, 132, 241, 0.3);
+}
+
+.btn-gen-ai:hover {
+    box-shadow: 0 5px 12px rgba(125, 132, 241, 0.5);
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.btn-gen-ai:active {
+    transform: translateY(0);
+}
+
+.btn-gen-ai:disabled {
+    background: #cbd5e1;
+    color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}

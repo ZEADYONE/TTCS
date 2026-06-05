@@ -191,6 +191,7 @@ main {
     position: absolute;
     z-index: 2;
     bottom: 10px;
+    width: 230px;
 }
 
 .card-content h3 {

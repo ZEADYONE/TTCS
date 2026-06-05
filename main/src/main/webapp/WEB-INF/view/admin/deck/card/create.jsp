@@ -69,7 +69,12 @@
 
                         <div class="form-group">
                             <label>Word</label>
-                            <input type="text" name="word" placeholder="Word" required>
+                            <div class="word-input-group">
+                                <input type="text" name="word" placeholder="Word" required>
+                                <button type="button" id="btnGenAI" class="btn-gen-ai">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Gen AI
+                                </button>
+                            </div>
                         </div>
 
                         <div class="form-group">
