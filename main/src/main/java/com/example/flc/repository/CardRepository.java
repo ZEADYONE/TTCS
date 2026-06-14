@@ -31,4 +31,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     public List<Card> findByDeck(Deck deck);
 
     public Page<Card> findByDeck(Deck deck, Pageable pageable);
+
 }

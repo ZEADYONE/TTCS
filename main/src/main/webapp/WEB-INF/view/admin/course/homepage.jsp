@@ -120,6 +120,7 @@
 
                             <div class="deck-grid">
                                 <c:forEach var="deck" items="${listCourse}">
+                                    <c:set var="interaction" value="${interactionConfigs[deck.id]}" />
                                     <div class="deck-card" data-id="${deck.id}">
                                         <a href="/admin/course/${deck.id}">
                                             <div class="card-top">
@@ -146,6 +147,16 @@
                                         <div class="card-footer">
                                             <div>
                                                 <span><i class="far fa-user"></i> Admin</span>
+                                                <span class="interaction-status ${interaction.enabled ? 'enabled' : 'disabled'}">
+                                                    <c:choose>
+                                                        <c:when test="${not empty interaction && interaction.enabled}">
+                                                            Interactive: ON
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Interactive: OFF
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </span>
                                                 <c:choose>
                                                     <c:when test="${deck.isFeatured}">
                                                         <i style="color: rgb(255, 212, 59);"
@@ -161,6 +172,16 @@
 
                                             <div class="card-actions"
                                                 style="display: flex; align-items: center; gap: 15px;">
+                                                <a href="/admin/course/${deck.id}/interaction"
+                                                    title="Configure interactive game">
+                                                    <i class="fa-solid fa-gamepad"></i>
+                                                </a>
+                                                <c:if test="${not empty interaction}">
+                                                    <a href="/admin/course/${deck.id}/interaction/preview"
+                                                        title="Preview interactive game">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                    </a>
+                                                </c:if>
                                                 <i class="fas fa-wrench fix_deck" style="cursor: pointer;"
                                                     data-id="${deck.id}" data-title="${deck.title}"
                                                     data-des="${deck.des}" data-scope="${deck.scope}"></i>

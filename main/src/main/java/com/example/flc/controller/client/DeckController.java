@@ -28,6 +28,7 @@ import com.example.flc.domain.Deck;
 import com.example.flc.domain.User;
 import com.example.flc.service.CardService;
 import com.example.flc.service.DeckService;
+import com.example.flc.service.InteractiveGameService;
 import com.example.flc.service.UploadService;
 import com.example.flc.service.UserDeckLibraryService;
 
@@ -40,15 +41,18 @@ public class DeckController {
     private final UserRepository userRepository;
     private final CardService cardService;
     private final UserDeckLibraryService userDeckLibraryService;
+    private final InteractiveGameService interactiveGameService;
 
     public DeckController(UploadService uploadService, DeckService deckService, UserRepository userRepository,
-            CardService cardService, DeckRepository deckRepository, UserDeckLibraryService userDeckLibraryService) {
+            CardService cardService, DeckRepository deckRepository, UserDeckLibraryService userDeckLibraryService,
+            InteractiveGameService interactiveGameService) {
         this.uploadService = uploadService;
         this.deckService = deckService;
         this.userRepository = userRepository;
         this.cardService = cardService;
         this.deckRepository = deckRepository;
         this.userDeckLibraryService = userDeckLibraryService;
+        this.interactiveGameService = interactiveGameService;
     }
 
     // CREATE
@@ -93,6 +97,7 @@ public class DeckController {
         model.addAttribute("listCard", pageCard.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pageCard.getTotalPages());
+        model.addAttribute("interactionAvailable", interactiveGameService.isInteractionAvailable(id));
 
         model.addAttribute("keyword", keyword);
         return "client/deck/homepage";

@@ -67,10 +67,12 @@
                                 <i class="fas fa-users"></i><span>Community<small>Chia sẻ flashcard</small></span>
                             </a>
                             <a href="/client/library" class="nav-item">
-                                <i class="fas fa-book-open"></i><span>My Library<small>FlashCard của bạn</small></span>
+                                <i class="fas fa-book-open"></i><span>My Library<small>Bộ flashcard của
+                                        bạn</small></span>
                             </a>
                             <a href="/client/course" class="nav-item">
-                                <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
+                                <i class="fas fa-graduation-cap"></i><span>Course <small>Bộ flashcard của hệ
+                                        thống</small></span>
                             </a>
                             <a href="/groups" class="nav-item">
                                 <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
@@ -221,12 +223,13 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
-                                            <div class="card-actions" style="display: flex; align-items: center; gap: 15px;">
+                                            <div class="card-actions"
+                                                style="display: flex; align-items: center; gap: 15px;">
                                                 <c:if test="${currentUser == deck.userId}">
                                                     <i class="fas fa-share-alt share-deck-btn"
                                                         style="cursor: pointer; color: var(--primary-color);"
                                                         data-deck-id="${deck.id}" title="Share to Group"
-                                                        onclick="openShareModal(${deck.id})"></i>
+                                                        onclick="openShareModal('${deck.id}')"></i>
 
                                                     <i class="fas fa-wrench fix_deck" style="cursor: pointer;"
                                                         data-id="${deck.id}" data-title="${deck.title}"
@@ -246,7 +249,8 @@
                                                                 <i class="fas fa-trash-alt trash"></i>
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <i class="fas fa-times-circle" style="color: #dc3545; font-size: 1.2rem;"></i>
+                                                                <i class="fas fa-times-circle"
+                                                                    style="color: #dc3545; font-size: 1.2rem;"></i>
                                                             </c:otherwise>
                                                         </c:choose>
                                                     </button>

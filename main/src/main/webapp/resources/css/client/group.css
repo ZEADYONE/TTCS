@@ -181,11 +181,11 @@ a {
 
 /* Màu sắc Trạng thái Deck */
 .deck-item.approved {
-    border-top: 4px solid var(--success);
+    border: 2px solid var(--success);
 }
 
 .deck-item.pending {
-    border: 2px dashed var(--warning);
+    border: 2px solid var(--warning);
 }
 
 .deck-item.rejected {

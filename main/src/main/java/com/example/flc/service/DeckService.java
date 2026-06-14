@@ -1,8 +1,7 @@
 package com.example.flc.service;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,12 +48,22 @@ public class DeckService {
 
     public Page<DeckProgress> getLibraryDecks(String keyword, List<String> filters, Long userId, Pageable pageable) {
         // Tránh lỗi SQL khi List rỗng
-        List<String> activeFilters = (filters == null || filters.isEmpty()) ? Arrays.asList("ALL") : filters;
+        Set<String> activeFilters = filters == null ? Set.of() : Set.copyOf(filters);
+        boolean allFilter = activeFilters.isEmpty() || activeFilters.contains("ALL");
 
         // Tương tự với keyword
-        String searchKeyword = (keyword != null && !keyword.isEmpty()) ? keyword : null;
+        String searchKeyword = (keyword != null && !keyword.isBlank()) ? keyword.trim() : null;
 
-        Page<Object[]> rawResults = deckRepository.findAdvancedDecks(searchKeyword, activeFilters, userId, pageable);
+        Page<Object[]> rawResults = deckRepository.findAdvancedDecks(
+                searchKeyword,
+                allFilter,
+                activeFilters.contains("Public"),
+                activeFilters.contains("Private"),
+                activeFilters.contains("Mine"),
+                activeFilters.contains("Admin"),
+                activeFilters.contains("Other"),
+                userId,
+                pageable);
 
         return rawResults.map(row -> new DeckProgress(
                 ((Number) row[0]).longValue(),

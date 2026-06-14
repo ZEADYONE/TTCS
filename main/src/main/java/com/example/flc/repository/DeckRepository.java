@@ -54,13 +54,12 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
                         "WHERE (:keyword IS NULL OR d.title LIKE CONCAT('%', :keyword, '%')) " +
                         "AND d.status = true " +
                         "AND (" +
-                        "    'ALL' IN :filters OR ( " +
-                        "        ('Public' IN :filters AND d.scope = 'Public') OR " +
-                        "        ('Private' IN :filters AND d.scope = 'Private') OR " +
-                        "        ('Mine' IN :filters AND d.user_id = :userId) OR " +
-                        "        ('Admin' IN :filters AND r.name = 'ADMIN') OR " +
-                        "        ('Other' IN :filters AND d.user_id != :userId AND r.name != 'ADMIN') " +
-                        "    )" +
+                        "    :allFilter = true OR " +
+                        "    (:publicFilter = true AND d.scope = 'Public') OR " +
+                        "    (:privateFilter = true AND d.scope = 'Private') OR " +
+                        "    (:mineFilter = true AND d.user_id = :userId) OR " +
+                        "    (:adminFilter = true AND r.name = 'ADMIN') OR " +
+                        "    (:otherFilter = true AND d.user_id != :userId AND r.name != 'ADMIN')" +
                         ") " +
                         "AND (" +
                         "    d.user_id = :userId " +
@@ -74,18 +73,24 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
                                         "JOIN User u ON d.user_id = u.id JOIN Role r ON u.role_id = r.id " +
                                         "WHERE (:keyword IS NULL OR d.title LIKE CONCAT('%', :keyword, '%')) " +
                                         "AND d.status = true " +
-                                        "AND ('ALL' IN :filters OR ( " +
-                                        "    ('Public' IN :filters AND d.scope = 'Public') OR " +
-                                        "    ('Private' IN :filters AND d.scope = 'Private') OR " +
-                                        "    ('Mine' IN :filters AND d.user_id = :userId) OR " +
-                                        "    ('Admin' IN :filters AND r.name = 'ADMIN') OR " +
-                                        "    ('Other' IN :filters AND d.user_id != :userId AND r.name != 'ADMIN') " +
-                                        ")) " +
+                                        "AND (" +
+                                        "    :allFilter = true OR " +
+                                        "    (:publicFilter = true AND d.scope = 'Public') OR " +
+                                        "    (:privateFilter = true AND d.scope = 'Private') OR " +
+                                        "    (:mineFilter = true AND d.user_id = :userId) OR " +
+                                        "    (:adminFilter = true AND r.name = 'ADMIN') OR " +
+                                        "    (:otherFilter = true AND d.user_id != :userId AND r.name != 'ADMIN')" +
+                                        ") " +
                                         "AND (d.user_id = :userId OR EXISTS (" +
                                         "    SELECT 1 FROM user_deck_library udl " +
-                                        "    WHERE udl.deck_id = d.id AND udl.user_id = :userId)))", nativeQuery = true)
+                                        "    WHERE udl.deck_id = d.id AND udl.user_id = :userId))", nativeQuery = true)
         Page<Object[]> findAdvancedDecks(@Param("keyword") String keyword,
-                        @Param("filters") List<String> filters,
+                        @Param("allFilter") boolean allFilter,
+                        @Param("publicFilter") boolean publicFilter,
+                        @Param("privateFilter") boolean privateFilter,
+                        @Param("mineFilter") boolean mineFilter,
+                        @Param("adminFilter") boolean adminFilter,
+                        @Param("otherFilter") boolean otherFilter,
                         @Param("userId") Long userId,
                         Pageable pageable);
 

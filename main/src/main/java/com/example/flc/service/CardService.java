@@ -44,6 +44,24 @@ public class CardService {
         return this.cardRepository.findById(id).orElseThrow(() -> new RuntimeException("Khong tim thay the"));
     }
 
+    public Card updateCardContent(Card submittedCard, String image, String sound) {
+        Card currentCard = getCard(submittedCard.getId());
+        currentCard.setWord(submittedCard.getWord());
+        currentCard.setMean(submittedCard.getMean());
+        currentCard.setTrans(submittedCard.getTrans());
+        currentCard.setExample(submittedCard.getExample());
+        currentCard.setDefinition(submittedCard.getDefinition());
+
+        if (image != null && !image.isBlank()) {
+            currentCard.setImage(image);
+        }
+        if (sound != null && !sound.isBlank()) {
+            currentCard.setSound(sound);
+        }
+
+        return this.cardRepository.save(currentCard);
+    }
+
     public void deleteCard(long id) {
         this.cardRepository.deleteById(id);
         return;

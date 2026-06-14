@@ -94,22 +94,8 @@ public class CardController {
         Card updateCard = this.cardService.getCard(card.getId());
 
         String pathImg = this.uploadService.handleSaveUploadImg(img, "client");
-        if (!pathImg.isEmpty()) {
-            card.setImage(pathImg);
-        } else {
-            card.setImage(updateCard.getImage());
-        }
-
         String pathSound = this.uploadService.handleSaveUploadSound(sound, "client");
-        if (!pathSound.isEmpty()) {
-            card.setSound(pathSound);
-        } else {
-            card.setSound(updateCard.getSound());
-        }
-
-        card.setDeck(updateCard.getDeck());
-
-        this.cardService.handelSaveCard(card);
+        this.cardService.updateCardContent(card, pathImg, pathSound);
         return "redirect:/client/deck/" + updateCard.getDeck().getId();
     }
 
@@ -177,22 +163,8 @@ public class CardController {
         Card updateCard = this.cardService.getCard(card.getId());
 
         String pathImg = this.uploadService.handleSaveUploadImg(img, "client");
-        if (!pathImg.isEmpty()) {
-            card.setImage(pathImg);
-        } else {
-            card.setImage(updateCard.getImage());
-        }
-
         String pathSound = this.uploadService.handleSaveUploadSound(sound, "client");
-        if (!pathSound.isEmpty()) {
-            card.setSound(pathSound);
-        } else {
-            card.setSound(updateCard.getSound());
-        }
-
-        card.setDeck(updateCard.getDeck());
-
-        this.cardService.handelSaveCard(card);
+        this.cardService.updateCardContent(card, pathImg, pathSound);
         return "redirect:/admin/course/" + updateCard.getDeck().getId();
     }
 
@@ -269,22 +241,8 @@ public class CardController {
         Card updateCard = this.cardService.getCard(card.getId());
 
         String pathImg = this.uploadService.handleSaveUploadImg(img, "client");
-        if (!pathImg.isEmpty()) {
-            card.setImage(pathImg);
-        } else {
-            card.setImage(updateCard.getImage());
-        }
-
         String pathSound = this.uploadService.handleSaveUploadSound(sound, "client");
-        if (!pathSound.isEmpty()) {
-            card.setSound(pathSound);
-        } else {
-            card.setSound(updateCard.getSound());
-        }
-
-        card.setDeck(updateCard.getDeck());
-
-        this.cardService.handelSaveCard(card);
+        this.cardService.updateCardContent(card, pathImg, pathSound);
         return "redirect:/admin/deck/update/" + updateCard.getDeck().getId();
     }
 

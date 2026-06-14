@@ -100,6 +100,12 @@
                     <a href="<c:url value='/client/game/${deck.id}'/>">
                         <button class="btn">Play Game</button>
                     </a>
+
+                    <c:if test="${interactionAvailable}">
+                        <a href="<c:url value='/client/interactive/${deck.id}'/>">
+                            <button class="btn interactive-btn">Chơi tương tác</button>
+                        </a>
+                    </c:if>
                 </section>
 
                 <!-- CARDS -->

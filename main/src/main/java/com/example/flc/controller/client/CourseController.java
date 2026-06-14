@@ -19,6 +19,7 @@ import com.example.flc.domain.Deck;
 import com.example.flc.domain.User;
 import com.example.flc.service.CourseService;
 import com.example.flc.service.DeckService;
+import com.example.flc.service.InteractiveGameService;
 import com.example.flc.service.UploadService;
 import com.example.flc.service.UserService;
 
@@ -29,13 +30,15 @@ public class CourseController {
     private final DeckService deckService;
     private final UploadService uploadService;
     private final UserService userService;
+    private final InteractiveGameService interactiveGameService;
 
     public CourseController(CourseService courseService, DeckService deckService, UploadService uploadService,
-            UserService userService) {
+            UserService userService, InteractiveGameService interactiveGameService) {
         this.courseService = courseService;
         this.deckService = deckService;
         this.uploadService = uploadService;
         this.userService = userService;
+        this.interactiveGameService = interactiveGameService;
     }
 
     // VIEW
@@ -50,6 +53,8 @@ public class CourseController {
         Page<Deck> pageDeck = this.courseService.getAllDeckWithFilter(keyword, scope, pageable);
 
         model.addAttribute("listCourse", pageDeck.getContent());
+        model.addAttribute("interactionConfigs",
+                interactiveGameService.getConfigSummaries(pageDeck.getContent()));
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pageDeck.getTotalPages());
 

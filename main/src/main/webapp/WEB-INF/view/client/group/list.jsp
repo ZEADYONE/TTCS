@@ -58,10 +58,12 @@
                                 <i class="fas fa-users"></i><span>Community<small>Chia sẻ flashcard</small></span>
                             </a>
                             <a href="/client/library" class="nav-item">
-                                <i class="fas fa-book-open"></i><span>My Library<small>FlashCard của bạn</small></span>
+                                <i class="fas fa-book-open"></i><span>My Library<small>Bộ flashcard của
+                                        bạn</small></span>
                             </a>
                             <a href="/client/course" class="nav-item">
-                                <i class="fas fa-graduation-cap"></i><span>Course <small>Từ Admin</small></span>
+                                <i class="fas fa-graduation-cap"></i><span>Course <small>Bộ flashcard của hệ
+                                        thống</small></span>
                             </a>
                             <a href="/groups" class="nav-item">
                                 <i class="fas fa-user-group"></i><span>Study Groups <small>Nhóm học tập</small></span>
