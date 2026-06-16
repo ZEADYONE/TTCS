@@ -94,11 +94,11 @@
                 <!-- ACTION -->
                 <section class="action-buttons">
                     <a href="<c:url value='/client/study/${deck.id}'/>">
-                        <button class="btn">Study</button>
+                        <button class="btn">Học lật thẻ</button>
                     </a>
 
                     <a href="<c:url value='/client/game/${deck.id}'/>">
-                        <button class="btn">Play Game</button>
+                        <button class="btn">Điền từ</button>
                     </a>
 
                     <c:if test="${interactionAvailable}">

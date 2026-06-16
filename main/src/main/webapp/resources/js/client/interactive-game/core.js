@@ -21,17 +21,62 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedCardId = null;
     let locked = false;
     let wrongAttempts = 0;
+    let promptSpeechTimer = null;
 
     const VoiceControl = {
         speak(text, lang = "vi-VN") {
-            if (!text || !("speechSynthesis" in window)) return;
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = lang;
-            utterance.rate = lang === "en-US" ? 0.85 : 0.95;
-            window.speechSynthesis.speak(utterance);
+            return new Promise((resolve) => {
+                if (!text || !("speechSynthesis" in window)) {
+                    resolve();
+                    return;
+                }
+
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                let completed = false;
+                let started = false;
+                let idleChecks = 0;
+                const completionWatch = window.setInterval(() => {
+                    if (window.speechSynthesis.speaking) {
+                        started = true;
+                        idleChecks = 0;
+                        return;
+                    }
+                    if (window.speechSynthesis.pending) {
+                        return;
+                    }
+                    if (started) {
+                        finish();
+                        return;
+                    }
+                    idleChecks++;
+                    if (idleChecks >= 12) {
+                        finish();
+                    }
+                }, 250);
+
+                function finish() {
+                    if (completed) return;
+                    completed = true;
+                    window.clearInterval(completionWatch);
+                    resolve();
+                }
+
+                utterance.lang = lang;
+                utterance.rate = lang === "en-US" ? 0.85 : 0.95;
+                utterance.onstart = () => {
+                    started = true;
+                };
+                utterance.onend = finish;
+                utterance.onerror = finish;
+                window.speechSynthesis.speak(utterance);
+            });
         },
         stop() {
+            if (promptSpeechTimer != null) {
+                window.clearTimeout(promptSpeechTimer);
+                promptSpeechTimer = null;
+            }
             if ("speechSynthesis" in window) {
                 window.speechSynthesis.cancel();
             }
@@ -101,7 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         template.renderRound({ obstacleZone, gameScene, character }, task);
         renderCards();
-        setTimeout(() => VoiceControl.speak(dialogueText.innerText), 180);
+        promptSpeechTimer = window.setTimeout(() => {
+            promptSpeechTimer = null;
+            VoiceControl.speak(dialogueText.innerText);
+        }, 180);
     }
 
     function renderCards() {
@@ -147,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             item.querySelector(".card-audio").addEventListener("click", (event) => {
                 event.stopPropagation();
+                if (locked) return;
                 VoiceControl.speak(card.word, "en-US");
             });
             cardList.appendChild(item);
@@ -163,10 +212,15 @@ document.addEventListener("DOMContentLoaded", () => {
         selectionHint.innerText = card ? `Đã chọn: ${card.word}` : "";
     }
 
-    function handleDrop(cardId, sourceElement) {
+    async function handleDrop(cardId, sourceElement) {
         if (locked) return;
         const card = findCard(cardId);
         if (!card) return;
+
+        if (promptSpeechTimer != null) {
+            window.clearTimeout(promptSpeechTimer);
+            promptSpeechTimer = null;
+        }
 
         const task = currentTask();
         if (Number(card.id) === Number(task.targetCardId)) {
@@ -175,11 +229,9 @@ document.addEventListener("DOMContentLoaded", () => {
             playEffect(template.successEffect(task));
             const message = task.successText || "Giỏi lắm!";
             showMessage(message, true);
-            VoiceControl.speak(message);
-            setTimeout(() => {
-                currentTaskIndex++;
-                renderTask();
-            }, 1400);
+            await VoiceControl.speak(message);
+            currentTaskIndex++;
+            renderTask();
         } else {
             wrongAttempts++;
             playEffect("character-wrong");
@@ -302,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
     document.getElementById("speakTaskButton").addEventListener("click", () => {
+        if (locked) return;
         VoiceControl.speak(dialogueText.innerText);
     });
     document.getElementById("playAgainButton").addEventListener("click", () => {

@@ -25,10 +25,15 @@ body {
     gap: 18px;
 }
 
-.game-header-actions a {
+.game-header-actions a,
+.back-navigation {
+    border: 0;
     color: white;
+    background: transparent;
     text-decoration: none;
     font-weight: 700;
+    font: inherit;
+    cursor: pointer;
 }
 
 .preview-badge {
@@ -72,10 +77,12 @@ body {
     font-size: 3rem;
 }
 
-.error-state a {
+.error-state a,
+.error-back {
     display: inline-block;
     margin-top: 12px;
     color: var(--blue);
+    background: transparent;
     font-weight: 800;
 }
 
@@ -379,11 +386,9 @@ body {
     width: 210px;
     height: 76px;
     border-radius: 8px;
-    background: repeating-linear-gradient(
-        0deg,
-        #c2410c 0 15px,
-        #fb923c 15px 18px
-    );
+    background: repeating-linear-gradient(0deg,
+            #c2410c 0 15px,
+            #fb923c 15px 18px);
     transform: skewX(-12deg);
 }
 
@@ -538,61 +543,142 @@ body {
     cursor: pointer;
 }
 
-.completion-actions a {
+.completion-actions a,
+.completion-actions .completion-back {
     color: var(--ink);
     background: #e2e8f0;
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes character-idle {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-9px) rotate(2deg); }
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateY(-9px) rotate(2deg);
+    }
 }
 
 @keyframes character-eat {
-    0%, 100% { transform: scale(1); }
-    25% { transform: scale(1.18) rotate(-7deg); }
-    50% { transform: scale(.92) rotate(7deg); }
-    75% { transform: scale(1.12); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.18) rotate(-7deg);
+    }
+
+    50% {
+        transform: scale(.92) rotate(7deg);
+    }
+
+    75% {
+        transform: scale(1.12);
+    }
 }
 
 @keyframes character-wrong {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-18px) rotate(-8deg); }
-    40% { transform: translateX(18px) rotate(8deg); }
-    60% { transform: translateX(-12px) rotate(-5deg); }
-    80% { transform: translateX(12px) rotate(5deg); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-18px) rotate(-8deg);
+    }
+
+    40% {
+        transform: translateX(18px) rotate(8deg);
+    }
+
+    60% {
+        transform: translateX(-12px) rotate(-5deg);
+    }
+
+    80% {
+        transform: translateX(12px) rotate(5deg);
+    }
 }
 
 @keyframes character-happy {
-    0%, 100% { transform: translateY(0) scale(1); }
-    35% { transform: translateY(-32px) scale(1.08); }
-    70% { transform: translateY(0) scale(1.12); }
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    35% {
+        transform: translateY(-32px) scale(1.08);
+    }
+
+    70% {
+        transform: translateY(0) scale(1.12);
+    }
 }
 
 @keyframes character-jump-over {
-    0%, 100% { transform: translate(0, 0) rotate(0); }
-    45% { transform: translate(145px, -125px) rotate(12deg); }
-    75% { transform: translate(210px, 0) rotate(0); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0);
+    }
+
+    45% {
+        transform: translate(145px, -125px) rotate(12deg);
+    }
+
+    75% {
+        transform: translate(210px, 0) rotate(0);
+    }
 }
 
 @keyframes character-swim-over {
-    0%, 100% { transform: translateX(0) rotate(0); }
-    30% { transform: translateX(70px) rotate(18deg) scale(.92); }
-    70% { transform: translateX(170px) rotate(-12deg) scale(.92); }
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(0);
+    }
+
+    30% {
+        transform: translateX(70px) rotate(18deg) scale(.92);
+    }
+
+    70% {
+        transform: translateX(170px) rotate(-12deg) scale(.92);
+    }
 }
 
 @keyframes character-run-over {
-    0% { transform: translateX(-60px) rotate(-8deg); }
-    30% { transform: translateX(25px) rotate(8deg); }
-    60% { transform: translateX(110px) rotate(-8deg); }
-    100% { transform: translateX(210px) rotate(4deg); }
+    0% {
+        transform: translateX(-60px) rotate(-8deg);
+    }
+
+    30% {
+        transform: translateX(25px) rotate(8deg);
+    }
+
+    60% {
+        transform: translateX(110px) rotate(-8deg);
+    }
+
+    100% {
+        transform: translateX(210px) rotate(4deg);
+    }
 }
 
 @media (max-width: 720px) {
+
     .game-topline,
     .cards-heading {
         align-items: flex-start;

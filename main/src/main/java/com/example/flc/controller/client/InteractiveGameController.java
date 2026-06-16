@@ -43,6 +43,11 @@ class InteractiveGamePageController {
             model.addAttribute("deckId", game.deckId());
             model.addAttribute("deckTitle", game.deckTitle());
             model.addAttribute("preview", preview);
+            model.addAttribute(
+                    "backUrl",
+                    preview
+                            ? "/admin/course/" + deckId + "/interaction"
+                            : "/client/deck/" + deckId);
             return "client/deck/interactive-game";
         } catch (InteractiveGameException exception) {
             redirectAttributes.addFlashAttribute("errorMessage", exception.getMessage());

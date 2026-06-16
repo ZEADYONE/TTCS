@@ -22,9 +22,10 @@
             <c:if test="${preview}">
                 <span class="preview-badge">ADMIN PREVIEW</span>
             </c:if>
-            <a href="/client/deck/${deckId}">
+            <button class="back-navigation" type="button"
+                onclick="window.location.assign('${backUrl}')">
                 <i class="fa-solid fa-arrow-left"></i> Quay lại deck
-            </a>
+            </button>
         </div>
     </header>
 
@@ -43,7 +44,10 @@
             <i class="fa-solid fa-circle-exclamation"></i>
             <h2>Chưa thể mở trò chơi</h2>
             <p id="errorMessage"></p>
-            <a href="/client/deck/${deckId}">Quay lại deck</a>
+            <button class="back-navigation error-back" type="button"
+                onclick="window.location.assign('${backUrl}')">
+                Quay lại deck
+            </button>
         </section>
 
         <section id="gameApp" hidden>
@@ -104,7 +108,10 @@
             <p id="completionText"></p>
             <div class="completion-actions">
                 <button type="button" id="playAgainButton">Chơi lại</button>
-                <a href="/client/deck/${deckId}">Quay lại deck</a>
+                <button class="back-navigation completion-back" type="button"
+                    onclick="window.location.assign('${backUrl}')">
+                    Quay lại deck
+                </button>
             </div>
         </section>
     </main>

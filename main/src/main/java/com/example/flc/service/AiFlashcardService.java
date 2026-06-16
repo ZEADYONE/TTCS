@@ -32,25 +32,47 @@ public class AiFlashcardService {
             throw new RuntimeException("Gemini API key is not configured.");
         }
 
-        String url = "https://generativelanguage.googleapis.com/v1beta/models/" + geminiModel + ":generateContent?key=" + geminiApiKey;
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/" + geminiModel + ":generateContent?key="
+                + geminiApiKey;
 
         String prompt = "You are an English learning assistant for Vietnamese students.\n" +
-                "Given one English word, generate flashcard information.\n" +
-                "Return only valid JSON with these fields: word, transliteration, vietnamese, example, definition.\n" +
-                "The Vietnamese meaning must be natural and easy to understand.\n" +
-                "The example sentence must be simple.\n" +
-                "The definition must be in English and suitable for learners.\n" +
-                "Do not include any extra text or markdown formatting.\n" +
-                "Word: " + requestDTO.getWord();
+                "The user may enter one word, multiple words, a phrase, or a misspelled word.\n" +
+                "Your task is to select exactly ONE valid and meaningful English word to create a flashcard.\n" +
+                "\n" +
+                "Rules for choosing the word:\n" +
+                "- If the input contains multiple English words, choose the most common and useful word for learners.\n"
+                +
+                "- If the input is a phrase or sentence, choose the main vocabulary word.\n" +
+                "- If the input has a simple spelling mistake, correct it to the nearest common English word.\n" +
+                "- If the input is not a valid English word and cannot be corrected, choose a simple common English word suitable for beginners.\n"
+                +
+                "- The returned 'word' field must contain the corrected or selected English word, not necessarily the original input.\n"
+                +
+                "\n" +
+                "Return only valid JSON with exactly these fields:\n" +
+                "word, transliteration, vietnamese, example, definition.\n" +
+                "\n" +
+                "Field requirements:\n" +
+                "- word: one valid English word only.\n" +
+                "- transliteration: the IPA phonetic transcription of the selected English word, for example /ˈæp.əl/.\n"
+                +
+                "- vietnamese: natural and easy-to-understand Vietnamese meaning.\n" +
+                "- example: one simple English sentence using the selected word.\n" +
+                "- definition: simple English definition suitable for learners.\n" +
+                "\n" +
+                "Important JSON rules:\n" +
+                "- Return JSON only.\n" +
+                "- Do not include any extra text.\n" +
+                "- Do not include markdown formatting.\n" +
+                "- Do not wrap the JSON in code blocks.\n" +
+                "\n" +
+                "User input: " + requestDTO.getWord();
 
         try {
             Map<String, Object> requestBody = Map.of(
                     "contents", List.of(
                             Map.of("parts", List.of(
-                                    Map.of("text", prompt)
-                            ))
-                    )
-            );
+                                    Map.of("text", prompt)))));
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
